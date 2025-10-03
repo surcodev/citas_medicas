@@ -1,3 +1,8 @@
+@props([
+    'title' => config('app.name', 'Laravel'),
+    'breadcrumbs' => []
+    ])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -5,14 +10,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ $title }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
 
         <!-- Styles -->
         @livewireStyles
@@ -24,9 +28,16 @@
         @include('layouts.includes.admin.sidebar')
 
         <div class="p-4 sm:ml-64">
-            <div class="mt-14">
-                {{ $slot }}
+            <div class="mt-14 flex items-center">
+                @include('layouts.includes.admin.breadcrumb')
+
+                @isset($action)
+                    <div class="ml-auto">
+                        {{ $action }}
+                    </div>
+                @endisset
             </div>
+            {{ $slot }}
         </div>
 
 
@@ -37,6 +48,12 @@
         {{-- Font Awesome --}}
         <script src="https://kit.fontawesome.com/bb44402073.js" crossorigin="anonymous"></script>
 
+        {{-- WireUI --}}
+        <wireui:scripts />
+        <script src="//unpkg.com/alpinejs" defer></script>
+        
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
          <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     </body>
 </html>
