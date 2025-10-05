@@ -48,12 +48,48 @@
         {{-- Font Awesome --}}
         <script src="https://kit.fontawesome.com/bb44402073.js" crossorigin="anonymous"></script>
 
+
+        {{-- Sweet Alert --}}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
         {{-- WireUI --}}
         <wireui:scripts />
-        <script src="//unpkg.com/alpinejs" defer></script>
+        {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
         
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
          <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+        @if(session('swal'))
+            <script>
+                Swal.fire(@json(session('swal')));
+            </script>
+        @endif
+
+        <script>
+            forms = document.querySelectorAll('.delete-form');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡No podrás revertir esta acción!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.submit();
+                        }
+                    });
+                });
+            });
+        </script>
+
     </body>
 </html>

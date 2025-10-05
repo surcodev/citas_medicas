@@ -1,19 +1,18 @@
 <x-admin-layout
-    title="Usuarios"
+    title="Pacientes"
     :breadcrumbs="[
     [
         'name' => 'Dashboard',
         'href' => route('admin.dashboard'),
     ],
     [
-        'name' => 'Usuarios',
-        'href' => route('admin.users.index'),
+        'name' => 'Pacientes',
+        'href' => route('admin.patients.index'),
     ],
     [
-        'name' => 'Editar',
+        'name' => 'Nuevo',
     ]]"
     >
-
 
 </x-admin-layout>
     

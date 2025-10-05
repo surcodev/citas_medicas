@@ -31,6 +31,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'dni',
+        'phone',
+        'address',
     ];
 
     /**
@@ -65,5 +68,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // RELACIONES UNO A UNO (1-1)
+    public function patient(){
+        return $this->hasOne(Patient::class);
     }
 }

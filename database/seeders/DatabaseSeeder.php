@@ -12,14 +12,13 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        // User::factory(10)->create();
-        $this->call(RoleSeeder::class);
+{
+    // Ejecuta los seeders de roles primero
+    $this->call([
+        BloodTypeSeeder::class,
+        RoleSeeder::class,
+        userSeeder::class,
+    ]);
+}
 
-        User::factory()->create([
-            'name' => 'Test',
-            'email' => 'test@localhost.com',
-            'password' => bcrypt('asd')
-        ]);
-    }
 }

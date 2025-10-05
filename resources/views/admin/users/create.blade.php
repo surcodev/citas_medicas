@@ -10,15 +10,14 @@
         'href' => route('admin.users.index'),
     ],
     [
-        'name' => 'Editar',
+        'name' => 'Nuevo',
     ]]"
     >
 
     <x-wire-card>
 
-        <form action="{{ route('admin.users.update',$user) }}" method="POST">
+        <form action="{{ route('admin.users.store') }}" method="POST">
             @csrf
-            @method('PUT')
 
             <div class="space-y-4">
                 <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-4">
@@ -26,7 +25,7 @@
                         name="name"
                         label="Nombre"
                         required
-                        :value="old('name', $user->name)"
+                        :value="old('name')"
                         placeholder="Ingrese el nombre del usuario"
                     />
                     <x-wire-input
@@ -34,19 +33,21 @@
                         label="Correo electrónico"
                         type="email"
                         required
-                        :value="old('email', $user->email)"
+                        :value="old('email')"
                         placeholder="Ingrese el correo electrónico del usuario"
                     />
                     <x-wire-input
                         name="password"
                         label="Contraseña"
                         type="password"
+                        required
                         placeholder="Ingrese la contraseña del usuario"
                     />
                     <x-wire-input
                         name="password_confirmation"
                         label="Confirmar Contraseña"
                         type="password"
+                        required
                         placeholder="Confirme la contraseña del usuario"
                     />
 
@@ -54,14 +55,14 @@
                     <x-wire-input
                         name="dni"
                         label="DNI"
-                        :value="old('dni', $user->dni)"
+                        :value="old('dni')"
                         placeholder="Ingrese el DNI del usuario"
                     />
                     {{-- Phone --}}
                     <x-wire-input
                         name="phone"
                         label="Teléfono"
-                        :value="old('phone', $user->phone)"
+                        :value="old('phone')"
                         placeholder="Ingrese el teléfono del usuario"
                     />
                 </div>
@@ -70,7 +71,7 @@
                 <x-wire-input
                     name="address"
                     label="Dirección"
-                    :value="old('address', $user->address)"
+                    :value="old('address')"
                     placeholder="Ingrese la dirección del usuario"
                 />
 
@@ -82,7 +83,7 @@
                     @foreach ($roles as $role)
                         <option
                             value="{{ $role->id }}"
-                            @selected(old('role', $user->roles->first()->id) == $role->id)
+                            @selected(old('role') == $role->id)
                         >
                             {{ $role->name }}
                     @endforeach
@@ -91,7 +92,7 @@
 
             <div class="flex justify-end mt-4">
                 <x-wire-button type="submit" >
-                    Actualizar
+                    Guardar
                 </x-wire-button>
             </div>
         </form>
