@@ -122,22 +122,22 @@
                             </p>
                         </x-wire-alert>
 
-                        <div class="grid lg:grid-cols-2 gap-4">
-                            <div>
-                                <span class="block text-gray-500 font-semibold text-sm ml-1">Teléfono:</span>
-                                <span class="text-gray-900 text-sm">{{ $patient->user->phone }}</span>
+                        <div class="grid lg:grid-cols-2 gap-2">
+                            <div class="flex items-center">
+                                <span class="text-gray-900 font-bold text-sm mr-2">Teléfono:</span>
+                                <span class="text-gray-800 text-sm">{{ $patient->user->phone }}</span>
                             </div>
-                            <div>
-                                <span class="block text-gray-500 font-semibold text-sm">Email:</span>
-                                <span class="text-gray-900 text-sm">{{ $patient->user->email }}</span>
+                            <div class="flex items-center">
+                                <span class="text-gray-900 font-bold text-sm mr-2">Email:</span>
+                                <span class="text-gray-800 text-sm">{{ $patient->user->email }}</span>
                             </div>
-                            <div>
-                                <span class="block text-gray-500 font-semibold text-sm">Dirección:</span>
-                                <span class="text-gray-900 text-sm">{{ $patient->user->address }}</span>
+                            <div class="flex items-center">
+                                <span class="text-gray-900 font-bold text-sm mr-2">Dirección:</span>
+                                <span class="text-gray-800 text-sm">{{ $patient->user->address }}</span>
                             </div>
-                            <div>
-                                <span class="block text-gray-500 font-semibold text-sm">DNI:</span>
-                                <span class="text-gray-700 text-sm">{{ $patient->user->dni }}</span>
+                            <div class="flex items-center">
+                                <span class="text-gray-900 font-bold text-sm mr-2">DNI:</span>
+                                <span class="text-gray-800 text-sm">{{ $patient->user->dni }}</span>
                             </div>
                         </div>
                     </div>
