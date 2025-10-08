@@ -28,8 +28,11 @@
                         alt="{{ $patient->user->name }}">
 
                     <div>
-                        <p class="text-2xl font-bold text-gray-900">
+                        <p class="text-2xl font-bold text-gray-900 mb-1">
                             {{ $patient->user->name }}
+                        </p>
+                        <p class="text-smfont-semibold text-gray">
+                            DNI: {{ $patient->user->dni ?? 'N/A' }}
                         </p>
                     </div>
                 </div>

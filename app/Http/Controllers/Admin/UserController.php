@@ -50,9 +50,13 @@ class UserController extends Controller
             'text' => 'El usuario ha sido creado y asignado el rol correctamente.',
         ]);
 
-        if($user::role('Paciente')){
+        if($user->hasRole('Paciente')){
             $patient = $user->patient()->create([]);
             return redirect()->route('admin.patients.edit', $patient->id);
+        }
+        if($user->hasRole('Doctor')){
+            $doctor = $user->doctor()->create([]);
+            return redirect()->route('admin.doctors.edit', $doctor->id);
         }
 
         return redirect()->route('admin.users.index');

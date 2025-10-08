@@ -14,8 +14,6 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasApiTokens;
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
@@ -71,7 +69,13 @@ class User extends Authenticatable
     }
 
     // RELACIONES UNO A UNO (1-1)
-    public function patient(){
+    public function patient()
+    {
         return $this->hasOne(Patient::class);
+    }
+
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
     }
 }

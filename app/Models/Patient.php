@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Faker\Core\Blood;
 use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
@@ -20,8 +21,12 @@ class Patient extends Model
         'emergency_contact_relationship',
     ];
 
-    // RELACIONES UNO A UNO INVERSA (1-1)
+    // RELACIONES INVERSA (1-1) 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function bloodType(){
+        return $this->belongsTo(BloodType::class);
     }
 }
