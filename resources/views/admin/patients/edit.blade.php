@@ -49,68 +49,34 @@
 
         {{-- TABS --}}
         <x-wire-card>
-            <div x-data="{ tab: 'datos-personales' }">
+            <x-tabs active="datos-personales">
                 {{-- Cabecera de Tabs --}}
-                <div class="border-b border-gray-200 dark:border-gray-700">
-                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
-                        <li class="me-2">
-                            <a href="#"
-                                x-on:click.prevent="tab = 'datos-personales'"
-                                :class="{
-                                    'inline-flex items-center justify-center p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-500': tab === 'datos-personales',
-                                    'inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300': tab !== 'datos-personales'
-                                }"
-                            >
-                                <i class="fa-solid fa-user me-2"></i>
-                                Datos Personales
-                            </a>
-                        </li>
+                <x-slot name="header">
+                        <x-tab-link tab="datos-personales">
+                            <i class="fa-solid fa-user me-2"></i>
+                            Datos Personales
+                        </x-tab-link>
 
-                        <li class="me-2">
-                            <a href="#"
-                                x-on:click.prevent="tab = 'antescedentes'"
-                                :class="{
-                                    'inline-flex items-center justify-center p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-500': tab === 'antescedentes',
-                                    'inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300': tab !== 'antescedentes'
-                                }"
-                            >
+                        <x-tab-link tab="antecedentes">
                                 <i class="fa-solid fa-file-medical me-2"></i>
                                 Antecedentes
-                            </a>
-                        </li>
+                        </x-tab-link>
 
-                        <li class="me-2">
-                            <a href="#"
-                                x-on:click.prevent="tab = 'informacion-general'"
-                                :class="{
-                                    'inline-flex items-center justify-center p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-500': tab === 'informacion-general',
-                                    'inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300': tab !== 'informacion-general'
-                                }"
-                            >
+                        <x-tab-link tab="informacion-general">
                                 <i class="fa-solid fa-info me-2"></i>
                                 Información General
-                            </a>
-                        </li>
+                        </x-tab-link>
 
-                        <li class="me-2">
-                            <a href="#"
-                                x-on:click.prevent="tab = 'contacto-emergencia'"
-                                :class="{
-                                    'inline-flex items-center justify-center p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-500': tab === 'contacto-emergencia',
-                                    'inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300': tab !== 'contacto-emergencia'
-                                }"
-                            >
+                        <x-tab-link tab="contacto-emergencia">
                                 <i class="fa-solid fa-heart me-2"></i>
                                 Contacto de Emergencia
                             </a>
-                        </li>
-                    </ul>
-                </div>
+                        </x-tab-link>
+                </x-slot>
 
                 {{-- Contenido de Tabs --}}
-                <div class="px-4 mt-4">
                     {{-- DATOS PERSONALES --}}
-                    <div x-show="tab === 'datos-personales'" x-cloak>
+                    <x-tab-content tab="datos-personales">
                         <x-wire-alert info title="Edición de usuario" class="mb-4">
                             <p>
                                 Para editar esta información, dirígete al 
@@ -140,11 +106,10 @@
                                 <span class="text-gray-800 text-sm">{{ $patient->user->dni }}</span>
                             </div>
                         </div>
-                    </div>
-
+                    </x-tab-content>
 
                     {{-- ANTECEDENTES --}}
-                    <div x-show="tab === 'antescedentes'" x-cloak>
+                    <x-tab-content tab="antecedentes">
                         <div class="grid lg:grid-cols-2 gap-4">
                             <div>
                                 <x-wire-textarea
@@ -180,10 +145,10 @@
                             </div>
                         </div>
                         
-                    </div>
+                    </x-tab-content>
 
                     {{-- INFORMACIÓN GENERAL --}}
-                    <div x-show="tab === 'informacion-general'" x-cloak>
+                    <x-tab-content tab="informacion-general">
                         <x-wire-native-select
                             label="Tipo de sangre"
                             name="blood_type_id"
@@ -205,10 +170,10 @@
                             {{ old('observations', $patient->observations) }}
                         </x-wire-textarea>
 
-                    </div>
+                    </x-tab-content>
 
                     {{-- CONTACTO DE EMERGENCIA --}}
-                    <div x-show="tab === 'contacto-emergencia'" x-cloak>
+                    <x-tab-content tab="contacto-emergencia">
                         <div class="space-y-4">
                             <x-wire-input
                                 label="Nombre del contacto"
@@ -226,10 +191,8 @@
                                 value="{{ old('emergency_contact_relationship', $patient->emergency_contact_relationship) }}"
                             />
                         </div>
-                    </div>
-                </div>
-
-            </div>
+                    </x-tab-content>
+            </x-tabs>
         </x-wire-card>
     </form>
 </x-admin-layout>
