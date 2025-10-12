@@ -20,6 +20,8 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        @stack('css')
     </head>
     <body class="font-sans antialiased bg-gray-50">
 
@@ -67,6 +69,12 @@
         @endif
 
         <script>
+            Livewire.on('swal', data => {
+                Swal.fire(data[0]);
+            });
+        </script>
+
+        <script>
             forms = document.querySelectorAll('.delete-form');
 
             forms.forEach(form => {
@@ -90,6 +98,8 @@
                 });
             });
         </script>
+
+        @stack('js')
 
     </body>
 </html>

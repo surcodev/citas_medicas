@@ -22,7 +22,11 @@ class UserSeeder extends Seeder
             'address' => 'Av. La Marina 2450, San Miguel, Lima',
         ]);
         $doctor->assignRole('Doctor');
-        $doctor->doctor()->create([]); // crea su registro en doctors
+        $doctor->doctor()->create([
+            'speciality_id' => 2, // Cardiología
+            'biography' => 'El Dr. Luis Gamarra Ramos es un cardiólogo con más de 10 años de experiencia en el diagnóstico y tratamiento de enfermedades cardiovasculares. Graduado de la Universidad Nacional Mayor de San Marcos, ha trabajado en diversos hospitales reconocidos y ha participado en múltiples congresos internacionales sobre cardiología.',
+            'medical_license_number' => 'CMP-123456',
+        ]);
 
         // 👩‍🦰 PACIENTE
         $patient = User::factory()->create([

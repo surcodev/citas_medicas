@@ -19,30 +19,6 @@ class PatientController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.patients.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Patient $patient)
-    {
-        return view('admin.patients.show', compact('patient'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Patient $patient)
@@ -77,13 +53,5 @@ class PatientController extends Controller
         $patient->update($data);
 
         return redirect()->route('admin.patients.edit', $patient);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Patient $patient)
-    {
-        //
     }
 }

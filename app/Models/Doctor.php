@@ -10,7 +10,8 @@ class Doctor extends Model
         'user_id',
         'speciality_id',
         'medical_license_number',
-        'biography'
+        'biography',
+        'active',
     ];
 
     // RELACIONES INVERSA
@@ -19,5 +20,10 @@ class Doctor extends Model
     }
     public function speciality(){
         return $this->belongsTo(Speciality::class);
+    }
+
+    // RELACION UNO A MUCHOS
+    public function schedules(){
+        return $this->hasMany(Schedule::class);
     }
 }

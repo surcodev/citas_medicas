@@ -34,7 +34,7 @@ class DoctorTable extends DataTableComponent
                 ->sortable(),
             Column::make("Especialidad", "speciality.name")
                 ->format(function ($value){
-                    return $value?->name ?: 'N/A';
+                    return $value ?: 'N/A';
                 })
                 ->sortable(),
             Column::make("Acciones")

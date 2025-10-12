@@ -1,18 +1,17 @@
 <x-admin-layout
-    title="Pacientes"
+    title="Horarios"
     :breadcrumbs="[
     [
         'name' => 'Dashboard',
         'href' => route('admin.dashboard'),
     ],
     [
-        'name' => 'Pacientes',
-        'href' => route('admin.patients.index'),
-    ],
-    [
-        'name' => 'Detalle',
-    ]]"
+        'name' => 'Horarios',
+    ]
+    ]"
     >
-
+    @livewire('admin.schedule-manager', [
+        'doctor' => $doctor
+    ])
 </x-admin-layout>
     

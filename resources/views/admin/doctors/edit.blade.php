@@ -31,7 +31,7 @@
                             {{ $doctor->user->name }}
                         </p>
                         <p class="text-smfont-semibold text-gray">
-                            Licencia: {{ $doctor->user->medical_license_number ?? 'N/A' }}
+                            Licencia: {{ $doctor->medical_license_number ?? 'N/A' }}
                         </p>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
             <div class="space-y-4">
                 <x-wire-native-select
                     label="Especialidad"
-                    name="speciaality_id"
+                    name="speciality_id"
                 >
 
                     <option value="">
@@ -81,6 +81,17 @@
                     placeholder="Escribe una breve biografía del doctor">
                     {{ old('biography', $doctor->biography) }}
                 </x-wire-textarea>
+
+                <x-wire-native-select
+                    label="Estado"
+                    name="active">
+                    <option value="1" @selected(old('active', $doctor->active) == 1)>
+                        Activo
+                    </option>
+                    <option value="0" @selected(old('active', $doctor->active) == 0)>
+                        Inactivo
+                    </option>
+                </x-wire-native-select>
             </div>
 
         </x-wire-card>
