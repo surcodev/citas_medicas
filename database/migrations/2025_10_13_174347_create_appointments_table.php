@@ -25,7 +25,8 @@ return new class extends Migration
             $table->time('end_time');
             $table->integer('duration')->default(15);
             $table->text('reason')->nullable();
-            $table->enum('status', ['scheduled', 'completed', 'canceled'])->default('scheduled');
+            // $table->enum('status', ['scheduled', 'completed', 'canceled'])->default('scheduled');
+            $table->tinyInteger('status')->default(1); // 1: scheduled, 2: completed, 3: canceled
 
             $table->timestamps();
         });

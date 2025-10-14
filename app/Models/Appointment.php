@@ -21,6 +21,16 @@ class Appointment extends Model
         'date' => 'date',
         'start_time' => 'time',
         'end_time' => 'time',
-        'status' => 'integer',
+        'status' => AppointmentEnum::class,
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
+    }
 }

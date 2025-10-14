@@ -42,8 +42,10 @@ class ScheduleManager extends Component
         $this->intervals = 60 / $this->appointment_duration;
 
         // 🔹 Inicializa horarios por defecto o desde la BD
-        $this->start_time = '08:00'; // Hora inicial por defecto
-        $this->end_time = '18:00';   // Hora final por defecto
+        // $this->start_time = '08:00';
+        // $this->end_time = '18:00';
+        $this->start_time = config('schedule.start_time', '08:00');
+        $this->end_time = config('schedule.end_time', '18:00');
 
         // Si el doctor tiene horarios previos, usa esos
         $existingSchedule = $this->doctor->schedules->first();
