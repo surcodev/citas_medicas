@@ -38,7 +38,7 @@ class AppointmentService
                     ->where('start_time', '<', $hourEnd);
             },
             'appointments' => function($q) use ($date, $hourStart, $hourEnd) {
-                $q->whereDate('date', $date)
+                $q->whereDate('date', $date->dayOfWeek)
                     ->where('start_time', '>=', $hourStart)
                     ->where('start_time', '<', $hourEnd);
             }

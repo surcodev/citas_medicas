@@ -55,7 +55,7 @@
     @if ($appointment['date'])
         @if (count($availabilities))
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-                <div class="col-span-1 md:col-span-2">
+                <div class="col-span-1 md:col-span-2 space-y-6">
 
                     @foreach ($availabilities as $availability)
                         <x-wire-card>
@@ -102,7 +102,22 @@
                 </div>
 
                 <div class="col-span-1">
-                    @json($selectedSchedules)
+                    {{-- @json($selectedSchedules) --}}
+                    <x-wire-card>
+                        <p class="text-lg font-semibold mb-4 text-slate-800">
+                            Resumen de la cita
+                        </p>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="font-slate-500">
+                                    Doctor:
+                                </span>
+                                <span class="font-semibold font-slate-700">
+                                    {{ $this->doctorName }}
+                                </span>
+                            </div>
+                        </div>
+                    </x-wire-card>
                 </div>
             </div>
         @else
@@ -119,9 +134,9 @@
             function data(){
                 return {
                     selectedSchedules: @entangle('selectedSchedules').live,
-                    selectSchedule(doctorId, schedule){
 
-                        if(this.selectedSchedules.doctor_id !== doctorId){
+                    selectSchedule(doctorId, schedule) {
+                        if (this.selectedSchedules.doctor_id !== doctorId) {
                             this.selectedSchedules = {
                                 doctor_id: doctorId,
                                 schedules: [schedule]
@@ -129,25 +144,55 @@
                             return;
                         }
 
-                        // this.selectedSchedules.doctor_id = doctorId;
-                        // this.selectedSchedules.schedules.push(schedule);
                         let currentSchedules = this.selectedSchedules.schedules;
                         let newSchedules = [];
 
-                        if (currentSchedules.includes(schedule)){
+                        if (currentSchedules.includes(schedule)) {
                             newSchedules = currentSchedules.filter(s => s !== schedule);
                         } else {
                             newSchedules = [...currentSchedules, schedule];
                         }
 
-                        this.selectedSchedules = {
-                            doctor_id: doctorId,
-                            schedules: newSchedules
+                        if (this.isContiguos(newSchedules)) {
+                            this.selectedSchedules = {
+                                doctor_id: doctorId,
+                                schedules: newSchedules
+                            };
+                        } else {
+                            this.selectedSchedules = {
+                                doctor_id: doctorId,
+                                schedules: [schedule]
+                            };
                         }
+                    },
+
+                    isContiguos(schedules) {
+                        if (schedules.length <= 1) return true;
+
+                        let sortedSchedules = schedules.sort();
+
+                        for (let i = 0; i < sortedSchedules.length - 1; i++) {
+                            let currentTime = sortedSchedules[i];
+                            let nextTime = sortedSchedules[i + 1];
+
+                            if (this.calculateNextTime(currentTime) !== nextTime) {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    },
+
+                    calculateNextTime(time) {
+                        let date = new Date(`1970-01-01T${time}`);
+                        let duration = parseInt("{{ config('schedule.appointment_duration') ?? 15 }}");
+                        date.setMinutes(date.getMinutes() + duration);
+                        return date.toTimeString().split(' ')[0];
                     }
                 }
             }
         </script>
     @endpush
+
 
 </div>

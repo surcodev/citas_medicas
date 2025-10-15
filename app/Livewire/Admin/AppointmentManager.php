@@ -45,6 +45,12 @@ class AppointmentManager extends Component
             : now()->format('Y-m-d');
     }
 
+    public function updated($property, $value){
+        if($property === 'selectedSchedules'){
+            $this->fillAppointment($value);
+        }
+    }
+
     #[Computed()]
     public function hourBlocks()
     {
@@ -53,6 +59,14 @@ class AppointmentManager extends Component
             '1 hour',
             Carbon::createFromTimeString(config('schedule.end_time')),
         )->excludeEndDate();
+    }
+
+    #[Computed()]
+    public function doctorName()
+    {
+        return $this->selectedSchedules['doctor_id']
+            ? $this->availabilities[$this->selectedSchedules['doctor_id']]['doctor']->user->name
+            : 'Por definir';
     }
 
     public function searchAvailability(AppointmentService $service)
@@ -79,10 +93,19 @@ class AppointmentManager extends Component
             $this->search['speciality_id']
         );
 
-        // Puedes ver qué llega aquí:
-        // dd($this->search, $availability);
+        // dd($this->availabilities); 
 
         $this->dispatch('setSearch', $this->search);
+    }
+
+    public function fillAppointment($selectedSchedules)
+    {
+        $schedules = collect($selectedSchedules['schedules'])
+            ->sort()
+            ->values();
+
+        $this->appointment['doctor_id'] = $selectedSchedules['doctor_id'];
+        $this->appointment['start_time'] = $schedules->first();
     }
 
     public function render()
