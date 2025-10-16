@@ -17,7 +17,7 @@
         </x-wire-button>
     </x-slot>
 
-    {{-- @livewire('admin.datatables.appointments-table') --}}
+    @livewire('admin.datatables.appointment-table')
 
 </x-admin-layout>
     

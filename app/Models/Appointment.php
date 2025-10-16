@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AppointmentEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model
@@ -19,8 +20,8 @@ class Appointment extends Model
 
     protected $casts = [
         'date' => 'date',
-        'start_time' => 'time',
-        'end_time' => 'time',
+        'start_time' => 'datetime:H:i:s',
+        'end_time' => 'datetime:H:i:s',
         'status' => AppointmentEnum::class,
     ];
 

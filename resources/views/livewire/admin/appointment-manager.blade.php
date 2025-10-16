@@ -85,6 +85,7 @@
                                     @foreach ($availability['schedules'] as $schedule)
                                         <li>
                                             <x-wire-button
+                                                :disabled="$schedule['disabled']"
                                                 x-on:click="selectSchedule({{ $availability['doctor']->id }}, '{{ $schedule['start_time'] }}')"
                                                 x-bind:class="selectedSchedules.doctor_id === {{ $availability['doctor']->id }} && selectedSchedules.schedules.includes('{{ $schedule['start_time'] }}') ? 'opacity-50' : ''"
                                                 class="w-full">
@@ -116,7 +117,67 @@
                                     {{ $this->doctorName }}
                                 </span>
                             </div>
+
+                            <div class="flex justify-between">
+                                <span class="font-slate-500">
+                                    Fecha:
+                                </span>
+                                <span class="font-semibold font-slate-700">
+                                    {{ $appointment['date']->format('d/m/Y') }}
+                                </span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span class="font-slate-500">
+                                    Horario:
+                                </span>
+                                <span class="font-semibold font-slate-700">
+                                    @if ($appointment['duration'])
+                                        {{ $appointment['start_time'] }} - {{ $appointment['end_time'] }}
+                                    @else
+                                        Por definir
+                                    @endif
+                                </span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span class="font-slate-500">
+                                    Duración:
+                                </span>
+                                <span class="font-semibold font-slate-700">
+                                    {{ $appointment['duration'] ?: 0 }} minutos
+                                </span>
+                            </div>
+
                         </div>
+
+                        <hr class="my-3">
+
+                        <div class="space-y-6">
+                            <x-wire-select
+                                label="Paciente"
+                                placeholder="Selecciona un paciente"
+                                :async-data="route('api.patients.index')"
+                                wire:model="appointment.patient_id"
+                                option-label="name"
+                                option-value="id"
+                            />
+
+                            <x-wire-textarea 
+                                wire:model="appointment.reason"
+                                label="Motivo de la cita"
+                                placeholder="Ingrese el motivo de la cita"
+                            />
+
+                            <x-wire-button
+                                wire:click="save"
+                                spinner="save"
+                                class="w-full">
+                                Confirmar cita
+                            </x-wire-button>
+                            
+                        </div>
+
                     </x-wire-card>
                 </div>
             </div>

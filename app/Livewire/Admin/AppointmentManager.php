@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Appointment;
 use Livewire\Component;
 use Carbon\CarbonPeriod;
 use Livewire\Attributes\Computed;
@@ -64,8 +65,8 @@ class AppointmentManager extends Component
     #[Computed()]
     public function doctorName()
     {
-        return $this->selectedSchedules['doctor_id']
-            ? $this->availabilities[$this->selectedSchedules['doctor_id']]['doctor']->user->name
+        return $this->appointment['doctor_id']
+            ? $this->availabilities[$this->appointment['doctor_id']]['doctor']->user->name
             : 'Por definir';
     }
 
@@ -84,7 +85,9 @@ class AppointmentManager extends Component
             'search.speciality_id' => 'nullable|exists:specialities,id',
         ]);
 
-        $this->appointment['date'] = $this->search['date'];
+        // $this->appointment['date'] = $this->search['date'];
+        $this->appointment['date'] = Carbon::parse($this->search['date']);
+
 
         // 🔍 Ejecutar búsqueda
         $this->availabilities = $service->searchAvailability(
@@ -104,8 +107,42 @@ class AppointmentManager extends Component
             ->sort()
             ->values();
 
-        $this->appointment['doctor_id'] = $selectedSchedules['doctor_id'];
-        $this->appointment['start_time'] = $schedules->first();
+        if ($schedules->count()) {
+            $this->appointment['doctor_id'] = $selectedSchedules['doctor_id'];
+            $this->appointment['start_time'] = $schedules->first();
+            $this->appointment['end_time'] = Carbon::parse($schedules->last())
+                ->addMinutes(config('schedule.appointment_duration'))
+                ->format('H:i:s');
+            $this->appointment['duration'] = $schedules->count() * config('schedule.appointment_duration');
+            return;
+        }
+
+        $this->appointment['doctor_id'] = "";
+        $this->appointment['start_time'] = "";
+        $this->appointment['end_time'] = "";
+        $this->appointment['duration'] = "";
+    }
+
+    public function save()
+    {
+        $this->validate([
+            'appointment.patient_id' => 'required|exists:patients,id',
+            'appointment.doctor_id' => 'required|exists:doctors,id',
+            'appointment.date' => 'required|date|after_or_equal:today',
+            'appointment.start_time' => 'required|date_format:H:i:s',
+            'appointment.end_time' => 'required|date_format:H:i:s|after:appointment.start_time',
+            'appointment.reason' => 'nullable|string|max:500',
+        ]);
+
+        Appointment::create($this->appointment);
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Cita creada',
+            'text' => 'La cita se ha creado exitosamente.',
+        ]);
+
+        return redirect()->route('admin.appointments.index');
     }
 
     public function render()

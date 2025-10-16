@@ -14,5 +14,31 @@
     ]]"
     >
 
+    <x-wire-card>
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-lg font-medium">
+                    Editando la cita para:
+                    <span class="font-semibold text-indigo-700">
+                        {{ $appointment->patient->user->name }}
+                    </span>
+                </p>
+                <p class="text-sm text-slate-500">
+                    Fecha de la cita:
+                    <span class="font-semibold text-slate-700">
+                        {{ $appointment->date->format('d/m/Y') }} a las {{ $appointment->start_time->format('H:i:s') }}
+                    </span>
+                </p>
+            </div>
+            <div>
+                <x-wire-badge
+                    flat
+                    :color="$appointment->status->color()"
+                    :label="$appointment->status->label()"
+                />
+            </div>
+        </div>
+    </x-wire-card>
+
 </x-admin-layout>
     
