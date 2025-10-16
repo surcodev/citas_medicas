@@ -25,6 +25,13 @@ class Appointment extends Model
         'status' => AppointmentEnum::class,
     ];
 
+    //RELACION UNO A UNO
+    public function consultation()
+    {
+       return $this->hasOne(Consultation::class);
+    }
+
+    //RELACIONES INVERSAS
     public function patient()
     {
         return $this->belongsTo(Patient::class);

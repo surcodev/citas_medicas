@@ -13,6 +13,8 @@ use App\Services\AppointmentService;
 
 class AppointmentManager extends Component
 {
+    public ?Appointment $appointmentEdit = null;
+
     public $search = [
         'date' => '',
         'hour' => '',
@@ -44,6 +46,10 @@ class AppointmentManager extends Component
         $this->search['date'] = now()->hour >= 12
             ? now()->addDay()->format('Y-m-d')
             : now()->format('Y-m-d');
+
+        if ($this->appointmentEdit) {
+            $this->appointment['patient_id'] = $this->appointmentEdit->patient_id;
+        }
     }
 
     public function updated($property, $value){
@@ -134,7 +140,22 @@ class AppointmentManager extends Component
             'appointment.reason' => 'nullable|string|max:500',
         ]);
 
-        Appointment::create($this->appointment);
+        if($this->appointmentEdit){
+            $this->appointmentEdit->update($this->appointment);
+            $this->dispatch('swal', [
+                'icon' => 'success',
+                'title' => 'Cita actualizada correctamente',
+                'text' => 'La cita se ha actualizado exitosamente.',
+            ]);
+
+            $this->searchAvailability(new AppointmentService());
+
+            return;
+        }
+
+        Appointment::create($this->appointment)
+            ->consultation()
+            ->create([]);
 
         session()->flash('swal', [
             'icon' => 'success',

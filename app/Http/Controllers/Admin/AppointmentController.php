@@ -63,4 +63,9 @@ class AppointmentController extends Controller
     {
         //
     }
+
+    public function consultation(Appointment $appointment)
+    {
+        return view('admin.appointments.consultation', compact('appointment'));
+    }
 }

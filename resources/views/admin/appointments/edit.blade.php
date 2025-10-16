@@ -14,7 +14,7 @@
     ]]"
     >
 
-    <x-wire-card>
+    <x-wire-card class="mb-4">
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-lg font-medium">
@@ -39,6 +39,8 @@
             </div>
         </div>
     </x-wire-card>
+
+    @livewire('admin.appointment-manager', ['appointmentEdit' => $appointment])
 
 </x-admin-layout>
     

@@ -3,8 +3,8 @@
         <i class="fa-solid fa-pen-to-square"></i>
     </x-wire-button>
 
-    {{-- <x-wire-button href="{{ route('admin.doctors.schedules', $doctor) }}" green xs>
-        <i class="fa-solid fa-clock"></i>
-    </x-wire-button> --}}
+    <x-wire-button href="{{ route('admin.appointments.consultation', $appointment) }}" green xs>
+        <i class="fa-solid fa-file-lines"></i>
+    </x-wire-button>
 
 </div>
