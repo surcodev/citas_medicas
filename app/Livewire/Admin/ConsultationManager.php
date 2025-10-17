@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Enums\AppointmentEnum;
 use App\Models\Appointment;
 use App\Models\Consultation;
 use Livewire\Component;
@@ -78,6 +79,9 @@ class ConsultationManager extends Component
                 'prescriptions' => $this->form['prescriptions'],
             ]);
         }
+
+        $this->appointment->status = AppointmentEnum::COMPLETED;
+        $this->appointment->save();
 
         $this->dispatch('swal', [
             'icon' => 'success',
