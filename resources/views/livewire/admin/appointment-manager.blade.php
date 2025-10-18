@@ -7,7 +7,7 @@
             Encuentra el horario perfecto para tu cita.
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <x-wire-input
                 type="date"
                 label="Fecha"
@@ -40,7 +40,7 @@
                 @endforeach
             </x-wire-select>
 
-            <div class="md:pt-6.5">
+            <div class="">
                 <x-wire-button
                     wire:click="searchAvailability"
                     class="w-full mt-6"
@@ -48,7 +48,6 @@
                     Buscar disponibilidad
                 </x-wire-button>
             </div>
-
         </div>
     </x-wire-card>
 

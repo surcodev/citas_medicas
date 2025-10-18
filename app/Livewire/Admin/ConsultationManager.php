@@ -5,12 +5,15 @@ namespace App\Livewire\Admin;
 use App\Enums\AppointmentEnum;
 use App\Models\Appointment;
 use App\Models\Consultation;
+use App\Models\Patient;
 use Livewire\Component;
 
 class ConsultationManager extends Component
 {
     public Appointment $appointment;
     public ?Consultation $consultation = null;
+    public $previousConsultations;
+    public Patient $patient;
 
     public $form = [];
 
@@ -18,6 +21,7 @@ class ConsultationManager extends Component
     {
         $this->appointment = $appointment;
         $this->consultation = $appointment->consultation; // Puede ser null
+        $this->patient = $appointment->patient;
 
         // ✅ Manejar el caso cuando aún no hay consulta
         $this->form = [
@@ -32,6 +36,17 @@ class ConsultationManager extends Component
                 ]
             ],
         ];
+
+        $this->previousConsultations = Consultation::whereHas('appointment', function ($query) {
+            $query->where('patient_id', $this->patient->id);
+        })
+        ->where('id', '!=', $this->consultation?->id)
+        ->when($this->consultation, function ($query) {
+            $query->where('created_at', '<', $this->consultation->created_at);
+        })
+        ->latest()
+        ->take(5)
+        ->get();
     }
 
     public function addPrescription()

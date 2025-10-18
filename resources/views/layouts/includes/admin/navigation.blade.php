@@ -10,7 +10,7 @@
                 </button>
                 <a href="/" class="flex ms-2 md:me-24">
                 <img src="https://raw.githubusercontent.com/surcodev/temp/refs/heads/main/logo_clinico.png" class="h-8 me-3" alt="FlowBite Logo" />
-                <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-[#81c3c9]">Vida Plena</span>
+                <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-[#81c3c9]">Dermatología Clínica Central</span>
                 </a>
             </div>
             <div class="flex items-center">
