@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
+        Gate::authorize('read_user');
         return view('admin.users.index');
     }
 
@@ -22,6 +21,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create_user');
         $roles = Role::all();
         return view('admin.users.create', compact('roles'));
     }
@@ -31,6 +31,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create_user');
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -67,6 +68,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        Gate::authorize('read_user');
         return view('admin.users.show',compact('user'));
     }
 
@@ -75,6 +77,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        Gate::authorize('update_user');
         $roles = Role::all();
         return view('admin.users.edit',compact('user','roles'));
     }
@@ -84,6 +87,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        Gate::authorize('update_user');
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
@@ -115,6 +119,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        Gate::authorize('delete_user');
         $user->roles()->detach();
         $user->delete();
 

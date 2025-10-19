@@ -11,7 +11,7 @@ return [
         // 0 => 'Domingo',
     ],
 
-    'appointment_duration' => 15, // Duración en minutos
+    'appointment_duration' => 30, // Duración en minutos
     'start_time' => '08:00:00',
     'end_time' => '18:00:00',
 ];

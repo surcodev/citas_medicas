@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Speciality;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +16,7 @@ class DatabaseSeeder extends Seeder
     // Ejecuta los seeders de roles primero
     $this->call([
         BloodTypeSeeder::class,
+        PermissionSeeder::class,
         RoleSeeder::class,
         SpecialitySeeder::class,
         UserSeeder::class,

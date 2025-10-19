@@ -117,7 +117,8 @@
         <div class="mt-6 flex justify-end">
             <x-wire-button 
                 wire:click="save"
-                spinner="save">
+                spinner="save"
+                :disabled="!$appointment->status->isEditable()">
                 <i class="fa-solid fa-save mr-2"></i>
                 Guardar consulta
             </x-wire-button>

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Appointment;
 use App\Models\User;
 
 Route::get('/patients', function (Request $request) {
@@ -32,3 +33,28 @@ Route::get('/patients', function (Request $request) {
                 ];
             });
 })->name('api.patients.index');
+
+Route::get('/appointments', function (Request $request) {
+    $appointments = Appointment::with(['patient.user', 'doctor.user'])
+        ->whereBetween('date', [$request->start, $request->end])
+        ->get();
+
+    return $appointments->map(function (Appointment $appointment) {
+
+        return [
+            'id' => $appointment->id,
+            'title' => $appointment->patient?->user?->name ?? 'Sin paciente',
+            'start' => $appointment->start,
+            'end' => $appointment->end,
+            'color' => $appointment->status?->colorHex() ?? '#000000',
+            'extendedProps' => [
+                'dateTime' => $appointment->start,
+                'patient' => $appointment->patient?->user?->name ?? 'Sin paciente',
+                'doctor' => $appointment->doctor?->user?->name ?? 'Sin doctor',
+                'status' => $appointment->status?->label() ?? 'Sin estado',
+                'color' => $appointment->status?->color() ?? '#000000',
+                'url' => route('admin.appointments.consultation', $appointment->id, absolute: true),
+            ],
+        ];
+    });
+})->name('api.appointments.index');

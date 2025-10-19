@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
@@ -13,12 +14,56 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ['Administrador', 'Recepcionista', 'Doctor', 'Paciente'];
+        Role::create([
+            'name' => 'Administrador',
+        ])->givePermissionTo(Permission::all());
+        
+        $roles = [
+            // 'Administrador',
+            'Doctor' => [
+                'access_dasboard',
 
-        foreach ($roles as $role) {
+                'create_appointment',
+                'read_appointment',
+                'update_appointment',
+                'delete_appointment',
+
+                'read_calendar',
+            ],
+            'Paciente' => [
+                'access_dasboard',
+                'create_appointment',
+                'read_appointment',
+                'read_calendar',
+            ],
+            'Recepcionista' => [
+                'access_dasboard',
+
+                'create_user',
+                'read_user',
+                'update_user',
+                'delete_user',
+
+                'read_patient',
+                'update_patient',
+
+                'read_doctor',
+                'update_doctor',
+
+                'create_appointment',
+                'read_appointment',
+                'update_appointment',
+                'delete_appointment',
+
+                'read_calendar',
+            ],
+        ];
+
+        foreach ($roles as $role => $permissions) {
             Role::create([
                 'name' => $role,
-            ]);
+            ])
+            ->givePermissionTo($permissions);
         }
     }
 }

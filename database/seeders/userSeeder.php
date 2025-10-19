@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         $doctor = User::factory()->create([
             'name' => 'Dr. Luis Gamarra Ramos',
             'email' => 'lgamarra@clinicaperu.com',
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('asd'),
             'dni' => '45896321',
             'phone' => '987654321',
             'address' => 'Av. La Marina 2450, San Miguel, Lima',
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         $patient = User::factory()->create([
             'name' => 'María Fernanda Salazar',
             'email' => 'msalazar@gmail.com',
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('asd'),
             'dni' => '72654893',
             'phone' => '912345678',
             'address' => 'Jr. Huancavelica 540, Cercado de Lima',
