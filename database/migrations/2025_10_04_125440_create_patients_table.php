@@ -25,6 +25,9 @@ return new class extends Migration
             $table->text('family_history')->nullable();
             $table->text('observations')->nullable();
 
+            $table->string('weight')->nullable();
+            $table->string('stature')->nullable();
+
             // Contacto de emergencia
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_phone')->nullable();

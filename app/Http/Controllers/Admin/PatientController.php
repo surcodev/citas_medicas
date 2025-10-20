@@ -45,6 +45,8 @@ class PatientController extends Controller
             'observations' => 'nullable|string|max:1000',
             'emergency_contact_name' => 'nullable|string|max:255',
             'emergency_contact_phone' => 'nullable|string|max:20',
+            'stature' => 'nullable|string|max:20',
+            'weight' => 'nullable|string|max:20',
             'emergency_contact_relationship' => 'nullable|string|max:100'
         ]);
 

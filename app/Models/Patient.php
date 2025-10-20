@@ -18,6 +18,8 @@ class Patient extends Model
         'observations',
         'emergency_contact_name',
         'emergency_contact_phone',
+        'stature',
+        'weight',
         'emergency_contact_relationship',
     ];
 

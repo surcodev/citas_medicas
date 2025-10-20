@@ -73,7 +73,6 @@
                         <x-tab-link tab="contacto-emergencia">
                                 <i class="fa-solid fa-heart me-2"></i>
                                 Contacto de Emergencia
-                            </a>
                         </x-tab-link>
                 </x-slot>
 
@@ -152,6 +151,18 @@
 
                     {{-- INFORMACIÓN GENERAL --}}
                     <x-tab-content tab="informacion-general">
+                        <x-wire-input
+                                label="Peso"
+                                name="weight"
+                                value="{{ old('weight', $patient->weight) }}"
+                        >
+                        </x-wire-input>
+                        <x-wire-input
+                                label="Talla"
+                                name="stature"
+                                value="{{ old('stature', $patient->stature) }}"
+                        >
+                        </x-wire-input>
                         <x-wire-native-select
                             label="Tipo de sangre"
                             name="blood_type_id"
