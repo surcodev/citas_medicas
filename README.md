@@ -8,3 +8,7 @@ php artisan config:clear
 php artisan cache:clear
 php artisan config:cache
 php artisan serve
+
+composer require fakerphp/faker --dev
+composer dump-autoload
+php artisan optimize:clear
