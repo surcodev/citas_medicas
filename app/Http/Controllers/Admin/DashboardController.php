@@ -22,7 +22,7 @@ class DashboardController extends Controller
         if (auth()->user()->hasRole('Administrador')){
             $data['total_patients'] = Patient::count();
             $data['total_doctors'] = Doctor::count();
-            $data['total_appointments'] = Appointment::whereDate('created_at', now())
+            $data['total_appointments'] = Appointment::whereDate('date', now())
                 ->where('status', AppointmentEnum::SCHEDULED)
                 ->count();
             $data['recent_users'] = User::latest()
@@ -54,11 +54,14 @@ class DashboardController extends Controller
 
             // return $data['next_appointment'];
 
-            $data['appointments_today'] = Appointment::whereDate('created_at', now())
-                ->where('status', AppointmentEnum::SCHEDULED)
-                ->whereHas('doctor', function($query){
+            $data['appointments_today'] = Appointment::whereHas('doctor', function($query){
                     $query->where('user_id', auth()->id());
-                })->get();
+                })
+                ->where('status', AppointmentEnum::SCHEDULED)
+                ->whereDate('date', '>=', now())
+                ->whereTime('end_time', '>=', now()->toTimeString())
+                ->orderBy('start_time')
+                ->get();
         };
 
         return view('admin.dashboard',compact('data'));
