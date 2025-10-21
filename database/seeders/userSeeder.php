@@ -14,18 +14,18 @@ class UserSeeder extends Seeder
     {
         // 👨‍⚕️ DOCTOR
         $doctor = User::factory()->create([
-            'name' => 'Dr. Luis Gamarra Ramos',
-            'email' => 'lgamarra@clinicaperu.com',
+            'name' => 'Brunella Clarisa Raymundo Villalva',
+            'email' => 'brunella_ra@hotmail.com',
             'password' => bcrypt('asd'),
-            'dni' => '45896321',
-            'phone' => '987654321',
-            'address' => 'Av. La Marina 2450, San Miguel, Lima',
+            'dni' => '42257345',
+            'phone' => '949888204',
+            'address' => 'Montero Rosas 1476 Departamento 502',
         ]);
         $doctor->assignRole('Doctor');
         $doctor->doctor()->create([
             'speciality_id' => 2, // Cardiología
-            'biography' => 'El Dr. Luis Gamarra Ramos es un cardiólogo con más de 10 años de experiencia en el diagnóstico y tratamiento de enfermedades cardiovasculares. Graduado de la Universidad Nacional Mayor de San Marcos, ha trabajado en diversos hospitales reconocidos y ha participado en múltiples congresos internacionales sobre cardiología.',
-            'medical_license_number' => 'CMP-123456',
+            'biography' => '[COMPLETAR INFORMACION]',
+            'medical_license_number' => 'CMP: 053176, RNE: 027483',
         ]);
 
         // 👩‍🦰 PACIENTE
