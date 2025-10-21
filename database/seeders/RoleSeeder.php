@@ -15,21 +15,21 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Role::create([
-            'name' => 'Administrador',
+            'name' => 'Doctor',
         ])->givePermissionTo(Permission::all());
         
         $roles = [
             // 'Administrador',
-            'Doctor' => [
-                'access_dasboard',
+            // 'Doctor' => [
+            //     'access_dasboard',
 
-                'create_appointment',
-                'read_appointment',
-                'update_appointment',
-                'delete_appointment',
+            //     'create_appointment',
+            //     'read_appointment',
+            //     'update_appointment',
+            //     'delete_appointment',
 
-                'read_calendar',
-            ],
+            //     'read_calendar',
+            // ],
             'Paciente' => [
                 'access_dasboard',
                 'create_appointment',
