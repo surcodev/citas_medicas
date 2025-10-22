@@ -42,12 +42,16 @@
                         label="Contraseña"
                         type="password"
                         placeholder="Ingrese la contraseña del usuario"
+                        class="hidden"
+                        value="asd"
                     />
                     <x-wire-input
                         name="password_confirmation"
                         label="Confirmar Contraseña"
                         type="password"
-                        placeholder="Confirme la contraseña del usuario"
+                        placeholder="Confirme la contraseña del Paciente"
+                        class="hidden"
+                        value="asd"
                     />
 
                     {{-- DNI --}}
@@ -55,14 +59,14 @@
                         name="dni"
                         label="DNI"
                         :value="old('dni', $user->dni)"
-                        placeholder="Ingrese el DNI del usuario"
+                        placeholder="Ingrese el DNI del Paciente"
                     />
                     {{-- Phone --}}
                     <x-wire-input
                         name="phone"
                         label="Teléfono"
                         :value="old('phone', $user->phone)"
-                        placeholder="Ingrese el teléfono del usuario"
+                        placeholder="Ingrese el teléfono del paciente"
                     />
                 </div>
 
@@ -71,11 +75,11 @@
                     name="address"
                     label="Dirección"
                     :value="old('address', $user->address)"
-                    placeholder="Ingrese la dirección del usuario"
+                    placeholder="Ingrese la dirección del paciente"
                 />
 
                 {{-- Roles --}}
-                <x-wire-native-select name="role_id" label="Rol">
+                <x-wire-native-select name="role_id" label="Rol" class="hidden">
 
                     <option value="" disabled selected>Seleccione un rol</option>
 

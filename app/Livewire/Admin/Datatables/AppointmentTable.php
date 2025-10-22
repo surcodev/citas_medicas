@@ -19,6 +19,7 @@ class AppointmentTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setSearchPlaceholder('Buscar por Nombre');
     }
 
     public function columns(): array
@@ -27,15 +28,15 @@ class AppointmentTable extends DataTableComponent
             Column::make("Id", "id")
                 ->sortable(),
             Column::make("Paciente", "patient.user.name")
-                ->sortable(),
-            Column::make("Doctor", "doctor.user.name")
-                ->sortable(),
+                ->sortable()->searchable(),
+            // Column::make("Doctor", "doctor.user.name")
+            //     ->sortable(),
             Column::make("Fecha", "date")
                 ->format(function($value) {
                     return $value->format('d/m/Y');
                 })
                 ->sortable(),
-            Column::make("Hora", "start_time")
+            Column::make("Hora Inicio", "start_time")
                 ->format(function($value) {
                     return $value->format('H:i');
                 })

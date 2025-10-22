@@ -26,7 +26,7 @@
                         label="Nombre"
                         required
                         :value="old('name')"
-                        placeholder="Ingrese el nombre del usuario"
+                        placeholder="Ingrese el nombre del paciente"
                     />
                     <x-wire-input
                         name="email"
@@ -34,21 +34,25 @@
                         type="email"
                         required
                         :value="old('email')"
-                        placeholder="Ingrese el correo electrónico del usuario"
+                        placeholder="Ingrese el correo electrónico del paciente"
                     />
                     <x-wire-input
                         name="password"
                         label="Contraseña"
                         type="password"
                         required
-                        placeholder="Ingrese la contraseña del usuario"
+                        placeholder="Ingrese la contraseña del paciente"
+                        class="hidden"
+                        value="asd"
                     />
                     <x-wire-input
                         name="password_confirmation"
                         label="Confirmar Contraseña"
                         type="password"
                         required
-                        placeholder="Confirme la contraseña del usuario"
+                        placeholder="Confirme la contraseña del paciente"
+                        class="hidden"
+                        value="asd"
                     />
 
                     {{-- DNI --}}
@@ -56,14 +60,14 @@
                         name="dni"
                         label="DNI"
                         :value="old('dni')"
-                        placeholder="Ingrese el DNI del usuario"
+                        placeholder="Ingrese el DNI del paciente"
                     />
                     {{-- Phone --}}
                     <x-wire-input
                         name="phone"
                         label="Teléfono"
                         :value="old('phone')"
-                        placeholder="Ingrese el teléfono del usuario"
+                        placeholder="Ingrese el teléfono del paciente"
                     />
                 </div>
 
@@ -72,18 +76,18 @@
                     name="address"
                     label="Dirección"
                     :value="old('address')"
-                    placeholder="Ingrese la dirección del usuario"
+                    placeholder="Ingrese la dirección del paciente"
                 />
 
-                {{-- Roles --}}
-                <x-wire-native-select name="role_id" label="Rol">
+                 {{-- Roles --}}
+                <x-wire-native-select name="role_id" label="Rol" class="hidden">
 
                     <option value="" disabled selected>Seleccione un rol</option>
 
                     @foreach ($roles as $role)
                         <option
                             value="{{ $role->id }}"
-                            @selected(old('role') == $role->id)
+                            @selected(old('role_id', 3) == $role->id)  {{-- valor por defecto: 3 --}}
                         >
                             {{ $role->name }}
                     @endforeach

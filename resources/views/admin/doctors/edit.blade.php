@@ -31,7 +31,7 @@
                             {{ $doctor->user->name }}
                         </p>
                         <p class="text-smfont-semibold text-gray">
-                            Licencia: {{ $doctor->medical_license_number ?? 'N/A' }}
+                            {{ $doctor->medical_license_number ?? 'N/A' }}
                         </p>
                     </div>
                 </div>
@@ -84,6 +84,7 @@
                 </x-wire-textarea>
 
                 <x-wire-native-select
+                    class="hidden"
                     label="Estado"
                     name="active">
                     <option value="1" @selected(old('active', $doctor->active) == 1)>

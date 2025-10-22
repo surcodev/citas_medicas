@@ -27,9 +27,9 @@
 
         @include('layouts.includes.admin.navigation')
 
-        @include('layouts.includes.admin.sidebar')
+        
 
-        <div class="p-4 sm:ml-64">
+        <div class="p-4">
             <div class="mt-14 flex items-center">
                 @include('layouts.includes.admin.breadcrumb')
 

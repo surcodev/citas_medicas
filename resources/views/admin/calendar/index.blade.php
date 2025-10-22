@@ -36,7 +36,7 @@
                     <p x-text="selectedEvent.patient"></p>
                 </div>
                 <div>
-                    <strong>Doctor:</strong>
+                    <strong>Doctora:</strong>
                     <p x-text="selectedEvent.doctor"></p>
                 </div>
                 <div>
@@ -52,7 +52,11 @@
             </a>
 
         </x-wire-modal-card>
-        <div x-ref='calendar'></div>
+        <div class="min-h-screen">
+            <div x-ref="calendar" class="w-[80%] h-[500px] bg-gray-100 rounded-lg mx-auto"></div>
+        </div>
+
+
     </div>
 
     @push('js')

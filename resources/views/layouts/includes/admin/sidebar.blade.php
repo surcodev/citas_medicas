@@ -31,7 +31,7 @@
             // 'name' => 'Doctora Brunella',
             'name' => 'Doctores',
             'icon' => 'fa-solid fa-user-doctor',
-            'href' => route('admin.doctors.index'),
+            'href' => 'http://127.0.0.1:8000/admin/doctors/1/edit',
             'active' => request()->routeIs('admin.doctors.*'),
         ],
         [

@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         ]);
         $doctor->assignRole('Doctor');
         $doctor->doctor()->create([
-            'speciality_id' => 2, // Cardiología
+            'speciality_id' => 1, // Dermatología
             'biography' => '[COMPLETAR INFORMACION]',
             'medical_license_number' => 'CMP: 053176, RNE: 027483',
         ]);

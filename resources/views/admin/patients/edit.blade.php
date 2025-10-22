@@ -83,8 +83,7 @@
                             <p>
                                 Para editar esta información, dirígete al 
                                 <a href="{{ route('admin.users.edit', $patient->user) }}" 
-                                class="font-semibold text-blue-600 hover:underline" 
-                                target="_blank">
+                                class="font-semibold text-blue-600 hover:underline">
                                 perfil del usuario
                                 </a> asociado a este paciente.
                             </p>

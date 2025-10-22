@@ -29,6 +29,7 @@
             </x-wire-select>
 
             <x-wire-select
+            class="hidden"
                 label="Especialidad (opcional)"
                 wire:model="search.speciality_id"
                 placeholder="Selecciona una especialidad"

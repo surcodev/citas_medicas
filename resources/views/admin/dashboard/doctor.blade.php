@@ -1,8 +1,8 @@
-<div>
+<div class="m-8">
     <div class="grid md:grid-cols-4 gap-6 mb-8">
             <x-wire-card class="md:col-span-2">
                 <p class="text-2xl font-bold text-gray-800">
-                    Buen dia, Dr(a). {{ auth()->user()->name }}!
+                    Buen dia, Dra. {{ auth()->user()->name }}!
                 </p>
                 <p class="mt-1 text-gray-600">
                     Aquí esta el resumen de su jornada
@@ -86,4 +86,59 @@
             </x-wire-card>
         </div>
     </div>
+
+    <!-- Redes sociales -->
+<div class="flex flex-col items-center mt-12">
+  <h2 class="text-2xl font-bold text-gray-800 mb-8">
+    Mis redes sociales
+  </h2>
+
+  <div class="flex flex-wrap justify-center gap-8">
+    <!-- TikTok -->
+    <a href="https://www.tiktok.com/@dra_brunella_raymundo" target="_blank"
+       class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 overflow-hidden w-56">
+      <div class="absolute inset-0 bg-gradient-to-tr from-black via-gray-800 to-gray-700 opacity-10 group-hover:opacity-20 transition duration-300"></div>
+      <div class="flex flex-col items-center justify-center p-6">
+        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok"
+             class="w-14 h-14 mb-3 group-hover:scale-110 transition-transform duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-black">TikTok</h3>
+      </div>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/dra_brunella_raymundo/" target="_blank"
+       class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 overflow-hidden w-56">
+      <div class="absolute inset-0 bg-gradient-to-tr from-pink-400 via-red-400 to-yellow-400 opacity-10 group-hover:opacity-20 transition duration-300"></div>
+      <div class="flex flex-col items-center justify-center p-6">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram"
+             class="w-14 h-14 mb-3 group-hover:scale-110 transition-transform duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-pink-500">Instagram</h3>
+      </div>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/p/Dra-Brunella-Raymundo-100094456022644/" target="_blank"
+       class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 overflow-hidden w-56">
+      <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-blue-300 opacity-10 group-hover:opacity-20 transition duration-300"></div>
+      <div class="flex flex-col items-center justify-center p-6">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"
+             class="w-14 h-14 mb-3 group-hover:scale-110 transition-transform duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600">Facebook</h3>
+      </div>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/brunella-raymundo-villalva-74bb67b3" target="_blank"
+       class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 overflow-hidden w-56">
+      <div class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-cyan-400 opacity-10 group-hover:opacity-20 transition duration-300"></div>
+      <div class="flex flex-col items-center justify-center p-6">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"
+             class="w-14 h-14 mb-3 group-hover:scale-110 transition-transform duration-300">
+        <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-700">LinkedIn</h3>
+      </div>
+    </a>
+  </div>
+</div>
+
+
 </div>

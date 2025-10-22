@@ -17,13 +17,14 @@ class PatientTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setSearchPlaceholder('Buscar por Nombre');
     }
 
     public function columns(): array
     {
         return [
             Column::make('Id', 'id')->sortable(),
-            Column::make('Nombre', 'user.name')->sortable(),
+            Column::make('Nombre', 'user.name')->sortable()->searchable(),
             Column::make('Email', 'user.email')->sortable(),
             Column::make('DNI', 'user.dni')->sortable(),
             Column::make('Teléfono', 'user.phone')->sortable(),

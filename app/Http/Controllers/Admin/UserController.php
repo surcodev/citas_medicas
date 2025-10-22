@@ -111,7 +111,7 @@ class UserController extends Controller
             'title' => 'Usuario actualizado',
             'text' => 'El usuario ha sido actualizado correctamente.',
         ]);
-        return redirect()->route('admin.users.edit', $user->id);
+        return redirect()->route('admin.patients.index');
     }
 
     /**
