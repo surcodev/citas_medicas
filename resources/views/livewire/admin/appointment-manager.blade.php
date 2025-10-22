@@ -91,7 +91,9 @@
                                                 x-on:click="selectSchedule({{ $availability['doctor']->id }}, '{{ $schedule['start_time'] }}')"
                                                 x-bind:class="selectedSchedules.doctor_id === {{ $availability['doctor']->id }} && selectedSchedules.schedules.includes('{{ $schedule['start_time'] }}') ? 'opacity-50' : ''"
                                                 class="w-full">
-                                                {{ $schedule['start_time'] }}
+                                                {{ \Carbon\Carbon::parse($schedule['start_time'])->format('H:i') }} -
+{{ \Carbon\Carbon::parse($schedule['start_time'])->addMinutes(30)->format('H:i') }}
+
                                             </x-wire-button>
 
                                         </li>
