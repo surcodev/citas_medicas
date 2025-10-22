@@ -1,36 +1,32 @@
-<div class="m-8">
+<div class="m-8 animate-fade-in">
     <div class="grid md:grid-cols-4 gap-6 mb-8">
-            <x-wire-card class="md:col-span-2">
-                <p class="text-2xl font-bold text-gray-800">
-                    Buen dia, Dra. {{ auth()->user()->name }}!
-                </p>
-                <p class="mt-1 text-gray-600">
-                    Aquí esta el resumen de su jornada
-                </p>
-            </x-wire-card>
+        <x-wire-card class="md:col-span-2 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+            <p class="text-2xl font-bold text-gray-800">
+                Buen día, Dra. {{ auth()->user()->name }}!
+            </p>
+            <p class="mt-1 text-gray-600">
+                Aquí está el resumen de su jornada
+            </p>
+        </x-wire-card>
 
-            <x-wire-card>
-                <p class="text-sm font-semibold text-gray-500">
-                        Citas para hoy
-                </p>
-                <p class="mt-2 text-3xl font-bold text-gray-800">
-                    {{ $data['appointments_today_count'] }}
-                </p>
-            </x-wire-card>
+        <x-wire-card class="transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+            <p class="text-sm font-semibold text-gray-500">Citas para hoy</p>
+            <p class="mt-2 text-3xl font-bold text-gray-800">
+                {{ $data['appointments_today_count'] }}
+            </p>
+        </x-wire-card>
 
-            <x-wire-card>
-                <p class="text-sm font-semibold text-gray-500">
-                        Citas para la semana
-                </p>
-                <p class="mt-2 text-3xl font-bold text-gray-800">
-                    {{ $data['appointments_week_count'] }}
-                </p>
-            </x-wire-card>
+        <x-wire-card class="transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+            <p class="text-sm font-semibold text-gray-500">Citas para la semana</p>
+            <p class="mt-2 text-3xl font-bold text-gray-800">
+                {{ $data['appointments_week_count'] }}
+            </p>
+        </x-wire-card>
     </div>
 
-    <div class="grid grid-cols-3 gap-8">
+    <div class="grid grid-cols-3 gap-8 animate-slide-up">
         <div>
-            <x-wire-card>
+            <x-wire-card class="transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
                 <p class="text-lg font-semibold text-gray-900">
                     Próxima cita:
                 </p>
@@ -39,30 +35,27 @@
                     <p class="mt-4 font-semibold text-xl text-gray-800">
                         {{ $data['next_appointment']->patient->user->name }}
                     </p>
-                    <p clas="text-gray-600 mb-4">
+                    <p class="text-gray-600 mb-4">
                         {{ $data['next_appointment']->date->format('d/m/Y') }} a las {{ $data['next_appointment']->start_time->format('H:i A') }}
                     </p>
-                    <x-wire-button href="{{ route('admin.appointments.consultation', $data['next_appointment']) }}" class="w-full mt-3">
+                    <x-wire-button href="{{ route('admin.appointments.consultation', $data['next_appointment']) }}" 
+                        class="w-full mt-3 transition-transform transform hover:scale-105">
                         Gestionar cita
                     </x-wire-button>
                 @else
-                    <p class="mt-2 text-gray-600">
-                        <p class="mt-4 text-gray-500">
-                            No tienes citas programadas para hoy
-                        </p>
+                    <p class="mt-4 text-gray-500">
+                        No tienes citas programadas para hoy
                     </p>
                 @endif
-
             </x-wire-card>
         </div>
+
         <div class="md:col-span-2">
-            <x-wire-card>
-                <p class="text-lg font-semibold text-gray-900">
-                    Agenda para hoy
-                </p>
+            <x-wire-card class="transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+                <p class="text-lg font-semibold text-gray-900">Agenda para hoy</p>
                 <ul class="mt-4 divide-y divide-gray-200">
                     @forelse ($data['appointments_today'] as $appointment)
-                        <li class="py-2 flex justify-between items-center">
+                        <li class="py-2 flex justify-between items-center transition-all duration-200 hover:bg-indigo-50 rounded-lg px-2">
                             <div>
                                 <p class="text-sm font-semibold text-gray-800">
                                     {{ $appointment->patient->user->name }}
@@ -71,23 +64,39 @@
                                     {{ $appointment->date->format('d/m/Y') }} a las {{ $appointment->start_time->format('h:i A') }}
                                 </p>
                             </div>
-                            <a href="{{ route('admin.appointments.consultation', $appointment) }}" class="text-sm text-indigo-600 hover:text-indigo-800">
-                                Gestionar
+                            <a href="{{ route('admin.appointments.consultation', $appointment) }}" 
+                               class="text-sm text-indigo-600 hover:text-indigo-800 transition-all duration-200">
+                                Gestionar →
                             </a>
                         </li>
                     @empty
                         <li class="py-2">
-                            <p class="text-gray-500">
-                                No tiene citas programadas para hoy.
-                            </p>
+                            <p class="text-gray-500">No tienes citas programadas para hoy.</p>
                         </li>
                     @endforelse
                 </ul>
             </x-wire-card>
         </div>
     </div>
+</div>
 
-    <!-- Redes sociales -->
+<!-- Animaciones Tailwind personalizadas -->
+<style>
+    @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+    animation: fade-in 0.8s ease-out;
+    }
+    .animate-slide-up {
+    animation: slide-up 0.9s ease-out;
+    }
+</style>
 <div class="flex flex-col items-center mt-12">
   <h2 class="text-2xl font-bold text-gray-800 mb-8">
     Mis redes sociales
