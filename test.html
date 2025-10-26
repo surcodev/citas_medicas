@@ -1,0 +1,180 @@
+<x-admin-layout
+    title="Pacientes"
+    :breadcrumbs="[
+        ['name' => 'Dashboard', 'href' => route('admin.dashboard')],
+        ['name' => 'Pacientes', 'href' => route('admin.patients.index')],
+        ['name' => 'Editar']
+    ]"
+>
+
+    @push('css')
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" />
+    @endpush
+
+    {{-- FORMULARIO PRINCIPAL --}}
+    <form action="{{ route('admin.patients.update', $patient) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <x-wire-card class="mb-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-8">
+                    <img src="{{ $patient->user->profile_photo_url }}" 
+                        class="h-20 w-20 rounded-full object-cover object-center" 
+                        alt="{{ $patient->user->name }}">
+                    <div>
+                        <p class="text-2xl font-bold text-gray-900 mb-1">
+                            {{ $patient->user->name }}
+                        </p>
+                        <p class="text-sm font-semibold text-gray">
+                            DNI: {{ $patient->user->dni ?? 'N/A' }}
+                        </p>
+                    </div>
+                </div>
+                <div class="flex space-x-8">
+                    <x-wire-button outline gray href="{{ route('admin.patients.index') }}">
+                        Volver
+                    </x-wire-button>
+                    <x-wire-button type="submit">
+                        <i class="fa-solid fa-check"></i>
+                        Guardar cambios
+                    </x-wire-button>
+                </div>
+            </div>
+        </x-wire-card>
+
+        {{-- CARD PRINCIPAL CON TABS --}}
+        <x-wire-card>
+            <x-tabs active="datos-personales">
+                <x-slot name="header">
+                    <x-tab-link tab="datos-personales">
+                        <i class="fa-solid fa-user me-2"></i> Datos Personales
+                    </x-tab-link>
+                    <x-tab-link tab="antecedentes">
+                        <i class="fa-solid fa-file-medical me-2"></i> Antecedentes
+                    </x-tab-link>
+                    <x-tab-link tab="informacion-general">
+                        <i class="fa-solid fa-info me-2"></i> Información General
+                    </x-tab-link>
+                    <x-tab-link tab="contacto-emergencia">
+                        <i class="fa-solid fa-heart me-2"></i> Contacto de Emergencia
+                    </x-tab-link>
+                </x-slot>
+
+                {{-- TAB 1: Datos Personales --}}
+                <x-tab-content tab="datos-personales">
+                    <x-wire-alert info title="Edición de usuario" class="mb-4">
+                        <p>
+                            Para editar esta información, dirígete al 
+                            <a href="{{ route('admin.users.edit', $patient->user) }}" 
+                               class="font-semibold text-blue-600 hover:underline">
+                               perfil del usuario
+                            </a>.
+                        </p>
+                    </x-wire-alert>
+
+                    <div class="grid lg:grid-cols-2 gap-2">
+                        <div><strong>Teléfono:</strong> {{ $patient->user->phone }}</div>
+                        <div><strong>Email:</strong> {{ $patient->user->email }}</div>
+                        <div><strong>Dirección:</strong> {{ $patient->user->address }}</div>
+                        <div><strong>DNI:</strong> {{ $patient->user->dni }}</div>
+                    </div>
+                </x-tab-content>
+
+                {{-- TAB 2: Antecedentes (SIN Dropzone AÚN) --}}
+                <x-tab-content tab="antecedentes">
+                    <label for="my-awesome-dropzone" class="block text-sm font-semibold text-gray-500 mb-2">
+                        Pruebas médicas
+                    </label>
+                    <div id="dropzone-container" class="mb-6"></div> {{-- Contenedor visual para Dropzone --}}
+
+                    <div class="grid lg:grid-cols-2 gap-4">
+                        <x-wire-textarea label="Alergias conocidas" name="allergies">
+                            {{ old('allergies', $patient->allergies) }}
+                        </x-wire-textarea>
+                        <x-wire-textarea label="Enfermedades crónicas" name="chronic_conditions">
+                            {{ old('chronic_conditions', $patient->chronic_conditions) }}
+                        </x-wire-textarea>
+                        <x-wire-textarea label="Antecedentes quirúrgicos" name="surgical_history">
+                            {{ old('surgical_history', $patient->surgical_history) }}
+                        </x-wire-textarea>
+                        <x-wire-textarea label="Antecedentes familiares" name="family_history">
+                            {{ old('family_history', $patient->family_history) }}
+                        </x-wire-textarea>
+                    </div>
+                </x-tab-content>
+
+                {{-- TAB 3: Información General --}}
+                <x-tab-content tab="informacion-general">
+                    <x-wire-input label="Peso" name="weight" value="{{ old('weight', $patient->weight) }}" />
+                    <x-wire-input label="Talla" name="stature" value="{{ old('stature', $patient->stature) }}" />
+
+                    <x-wire-native-select label="Tipo de sangre" name="blood_type_id" class="mb-4">
+                        <option value="">Seleccione un tipo de sangre</option>
+                        @foreach ($bloodTypes as $bloodType)
+                            <option value="{{ $bloodType->id }}" @selected($bloodType->id === $patient->blood_type_id)>
+                                {{ $bloodType->name }}
+                            </option>
+                        @endforeach
+                    </x-wire-native-select>
+
+                    <x-wire-textarea label="Observaciones" name="observations">
+                        {{ old('observations', $patient->observations) }}
+                    </x-wire-textarea>
+                </x-tab-content>
+
+                {{-- TAB 4: Contacto de emergencia --}}
+                <x-tab-content tab="contacto-emergencia">
+                    <x-wire-input label="Nombre del contacto" name="emergency_contact_name"
+                        value="{{ old('emergency_contact_name', $patient->emergency_contact_name) }}" />
+                    <x-wire-input label="Teléfono del contacto" name="emergency_contact_phone"
+                        value="{{ old('emergency_contact_phone', $patient->emergency_contact_phone) }}" />
+                    <x-wire-input label="Relación con el contacto" name="emergency_contact_relationship"
+                        value="{{ old('emergency_contact_relationship', $patient->emergency_contact_relationship) }}" />
+                </x-tab-content>
+            </x-tabs>
+        </x-wire-card>
+    </form>
+
+    {{-- FORMULARIO DROPZONE SEPARADO PERO EN EL MISMO BLOQUE VISUAL --}}
+    <form action="{{ route('admin.patients.dropzone', $patient) }}" 
+        method="POST" 
+        enctype="multipart/form-data"
+        class="dropzone hidden"
+        id="my-awesome-dropzone">
+        @csrf
+    </form>
+
+    @push('js')
+        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Mover visualmente el Dropzone al tab correspondiente
+                const dz = document.getElementById('my-awesome-dropzone');
+                const container = document.getElementById('dropzone-container');
+                container.appendChild(dz);
+                dz.classList.remove('hidden');
+
+                Dropzone.options.myAwesomeDropzone = {
+                    init: function(){
+                        let myDropzone = this;
+                        let images= @json($patient->images);
+                        
+                        images.forEach(function(image){
+                            let mockFile = { 
+                                id:image.id,
+                                name: image.path.split('/').pop(),
+                                size: image.size
+                            };
+                            myDropzone.existingFiles(mockFile, `{{ Storage::url('${image.path}') }}`);
+                        });
+                    }
+                    paramName: "file",
+                    maxFilesize: 10, // MB
+                    acceptedFiles: ".jpg,.jpeg,.png,.pdf",
+                    dictDefaultMessage: "Arrastra archivos o haz clic aquí para subir antecedentes médicos",
+                };
+            });
+        </script>
+    @endpush
+</x-admin-layout>

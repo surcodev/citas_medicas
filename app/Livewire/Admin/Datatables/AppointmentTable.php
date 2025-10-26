@@ -47,9 +47,25 @@ class AppointmentTable extends DataTableComponent
                 })
                 ->sortable(),
             Column::make("Estado", "status")
-                ->format(function($value) {
-                    return $value->label();
-                }),
+    ->format(function ($value, $row) {
+        $color = $value->colorHex();
+        $label = $value->label();
+
+        return <<<HTML
+            <span style="
+                background-color: {$color};
+                color: white;
+                padding: 4px 8px;
+                border-radius: 6px;
+                font-size: 0.85rem;
+                font-weight: 600;
+                text-transform: capitalize;
+            ">
+                {$label}
+            </span>
+        HTML;
+    })
+    ->html(),
             Column::make("Acciones")
                 ->label(function($row){
                     return view('admin.appointments.actions', ['appointment' => $row]);

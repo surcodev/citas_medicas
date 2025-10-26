@@ -186,14 +186,14 @@
         width="4xl">
 
         @forelse ($previousConsultations as $consultation)
-            <a href="{{ route('admin.appointments.show', $consultation->appointment_id) }}" target="_blank"
+            <a href="{{ route('admin.appointments.consultation', $consultation->appointment_id) }}" target="_blank"
                 class="block p-5 rounded-lg shadow-md border-gray-200 hover:border-indigo-400 hover:shadow-indigo-100 transition-all duration-200">
 
                 <div class="flex justify-between items-center">
                     <div>
                         <p class="font-semibold flex items-center text-gray-800">
                             <i class="fa-solid fa-calendar-days text-gray-500"></i>
-                            {{ $consultation->appointment->date->format('d/M/Y H:i') }}
+                            {{ $consultation->appointment->date->format('d/M/Y') }} ({{ $consultation->appointment->start_time->format('H:i') }} - {{ $consultation->appointment->end_time->format('H:i') }})
                         </p>
                         <p>
                             Atentido por: Dr(a). {{ $consultation->appointment->doctor->user->name }}
