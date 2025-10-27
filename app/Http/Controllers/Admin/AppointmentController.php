@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class AppointmentController extends Controller
 {
@@ -73,5 +74,17 @@ class AppointmentController extends Controller
     {
         Gate::authorize('update_appointment');
         return view('admin.appointments.consultation', compact('appointment'));
+    }
+
+    public function dropzone(Request $request, Appointment $appointment)
+    {
+        $image = $appointment->images()->create([
+            'path' => Storage::put('/images', $request->file('file')),
+            'size' => $request->file('file')->getSize(),
+        ]);
+
+        return response()->json([
+            'path' => $image->path,
+        ]);
     }
 }

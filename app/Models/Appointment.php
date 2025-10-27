@@ -70,4 +70,10 @@ class Appointment extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+
+    // Relación polimórfica (1 cita puede tener muchas imágenes)
+    public function images()
+    {
+        return $this->morphMany(Image2::class, 'imageable');
+    }
 }

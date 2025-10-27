@@ -29,3 +29,5 @@ Route::get('calendar', [CalendarController::class, 'index'])
 
 Route::post('patients/{patient}/dropzone', [PatientController::class, 'dropzone'])
     ->name('patients.dropzone');
+Route::post('appointment/{appointment}/dropzone', [AppointmentController::class, 'dropzone'])
+    ->name('appointments.dropzone');

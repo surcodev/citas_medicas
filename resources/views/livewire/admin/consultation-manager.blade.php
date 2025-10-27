@@ -1,3 +1,7 @@
+@push('css')
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" />
+@endpush
+
 <div>
     <div class="md:flex md:justify-between items-center mb-4">
                 <div>
@@ -36,23 +40,37 @@
             </x-slot>
                 <x-tab-content tab="consulta">
                     <div class="space-y-4">
+
+                        <label class="block text-sm font-semibold text-gray-500 mb-2">
+                            Pruebas médicas
+                        </label>
+
+                        {{-- Contenedor visual para Dropzone --}}
+                        <div id="dropzone-container" class="mb-6"></div>
+                        
                         <x-wire-textarea 
                             label="Diagnóstico" 
                             placeholder="Describa diagnóstico del paciente aquí..."
                             wire:model.defer="form.diagnosis"
+                            rows="2"
                         />
 
                         <x-wire-textarea 
                             label="Tratamiento" 
                             placeholder="Describa el tratamiento aquí..."
                             wire:model.defer="form.treatment"
+                            rows="2"
                         />
 
                         <x-wire-textarea 
                             label="Notas" 
                             placeholder="Agregue las notas adicionales aquí..."
                             wire:model.defer="form.notes"
+                            rows="2"
                         />
+
+
+                        
                     </div>
                 </x-tab-content>
 
@@ -233,7 +251,7 @@
                             {{ $consultation->appointment->date->format('d/M/Y') }} ({{ $consultation->appointment->start_time->format('H:i') }} - {{ $consultation->appointment->end_time->format('H:i') }})
                         </p>
                         <p>
-                            Atentido por: Dr(a). {{ $consultation->appointment->doctor->user->name }}
+                            Atentido por: Dra. {{ $consultation->appointment->doctor->user->name }}
                         </p>
                     </div>
                     <div class="">
@@ -263,3 +281,55 @@
 
     </x-wire-modal-card>
 </div>
+
+{{-- FORMULARIO DROPZONE SEPARADO PERO EN EL MISMO BLOQUE VISUAL --}}
+    <form action="{{ route('admin.appointments.dropzone', $patient) }}" 
+        method="POST" 
+        enctype="multipart/form-data"
+        class="dropzone hidden"
+        id="my-awesome-dropzone">
+        @csrf
+    </form>
+
+    @push('js')
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dzForm = document.getElementById('my-awesome-dropzone');
+    const container = document.getElementById('dropzone-container');
+
+    // Mover el formulario Dropzone al contenedor
+    container.appendChild(dzForm);
+    dzForm.classList.remove('hidden');
+
+    // Inicializar Dropzone manualmente
+    const myDropzone = new Dropzone(dzForm, {
+        paramName: "file",
+        maxFilesize: 10, // MB
+        acceptedFiles: ".jpg,.jpeg,.png,.pdf",
+        dictDefaultMessage: "Arrastra archivos o haz clic aquí para subir antecedentes médicos",
+
+        init: function() {
+            let images = @json($patient->images);
+
+            images.forEach(image => {
+                let mockFile = {
+                    id: image.id,
+                    name: image.path.split('/').pop(),
+                    size: image.size
+                };
+
+                this.emit("addedfile", mockFile);
+
+                const ext = image.path.split('.').pop().toLowerCase();
+                if(ext !== 'pdf') {
+                    this.emit("thumbnail", mockFile, `{{ Storage::url('${image.path}') }}`);
+                }
+
+                this.emit("complete", mockFile);
+            });
+        }
+    });
+});
+</script>
+@endpush
