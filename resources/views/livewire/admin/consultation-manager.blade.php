@@ -133,6 +133,43 @@
         <div class="grid md:grid-cols-4 gap-6">
             <div>
                 <p class="font-medium text-gray-500 mb-2">
+                    Peso:
+                </p>
+                <p class="font-medium text-gray-800">
+                    {{ $patient->weight ? $patient->weight . ' kg' : 'No registrado' }}
+                </p>
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-500 mb-2">
+                    Talla:
+                </p>
+                <p class="font-medium text-gray-800">
+                    {{ $patient->stature ? $patient->stature . ' m' : 'No registrado' }}
+                </p>
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-500 mb-2">
+                    Presión arterial :
+                </p>
+                <p class="font-medium text-gray-800">
+                    {{ $patient->blood_pressure ? $patient->blood_pressure . ' mmHg' : 'No registrado' }}
+                </p>
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-500 mb-2">
+                    Frecuencia cardíaca:
+                </p>
+                <p class="font-medium text-gray-800">
+                    {{ $patient->respiratory_rate ? $patient->respiratory_rate . ' lpm' : 'No registrado' }}
+                </p>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-4 gap-6 mt-6">
+            <div>
+                <p class="font-medium text-gray-500 mb-2">
                     Tipo de sangre:
                 </p>
                 <p class="font-medium text-gray-800">

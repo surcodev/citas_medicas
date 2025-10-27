@@ -81,34 +81,68 @@
                     </div>
                 </x-tab-content>
 
-                {{-- TAB 2: Antecedentes (SIN Dropzone AÚN) --}}
-                <x-tab-content tab="antecedentes">
-                    <label for="my-awesome-dropzone" class="block text-sm font-semibold text-gray-500 mb-2">
-                        Pruebas médicas
-                    </label>
-                    <div id="dropzone-container" class="mb-6"></div> {{-- Contenedor visual para Dropzone --}}
+                {{-- TAB 2: Antecedentes --}}
+<x-tab-content tab="antecedentes">
+    <label class="block text-sm font-semibold text-gray-500 mb-2">
+        Pruebas médicas
+    </label>
 
-                    <div class="grid lg:grid-cols-2 gap-4">
-                        <x-wire-textarea label="Alergias conocidas" name="allergies" rows="3">
-                            {{ old('allergies', $patient->allergies) }}
-                        </x-wire-textarea>
-                        <x-wire-textarea label="Enfermedades prévias" name="chronic_conditions" rows="3">
-                            {{ old('chronic_conditions', $patient->chronic_conditions) }}
-                        </x-wire-textarea>
-                        <x-wire-textarea label="Antecedentes quirúrgicos" name="surgical_history" rows="3">
-                            {{ old('surgical_history', $patient->surgical_history) }}
-                        </x-wire-textarea>
-                        <x-wire-textarea label="Antecedentes familiares" name="family_history" rows="3">
-                            {{ old('family_history', $patient->family_history) }}
-                        </x-wire-textarea>
-                        <x-wire-textarea label="Medicamentos actuales" name="current_medications" rows="3">
-                            {{ old('current_medications', $patient->current_medications) }}
-                        </x-wire-textarea>
-                        <x-wire-textarea label="Hábitos (tabaquismo, alcohol, alimentación, etc)" name="habits" rows="3">
-                            {{ old('habits', $patient->habits) }}
-                        </x-wire-textarea>
-                    </div>
-                </x-tab-content>
+    {{-- Contenedor visual para Dropzone --}}
+    <div id="dropzone-container" class="mb-6"></div>
+
+    {{-- Formulario Dropzone --}}
+    <form action="{{ route('admin.patients.dropzone', $patient) }}" 
+          method="POST" 
+          enctype="multipart/form-data"
+          class="dropzone hidden"
+          id="my-awesome-dropzone">
+        @csrf
+    </form>
+
+    {{-- Textareas --}}
+    <div class="grid lg:grid-cols-2 gap-4">
+        <x-wire-textarea label="Alergias conocidas" name="allergies" rows="3">{{ old('allergies', $patient->allergies) }}</x-wire-textarea>
+        <x-wire-textarea label="Enfermedades prévias" name="chronic_conditions" rows="3">{{ old('chronic_conditions', $patient->chronic_conditions) }}</x-wire-textarea>
+        <x-wire-textarea label="Antecedentes quirúrgicos" name="surgical_history" rows="3">{{ old('surgical_history', $patient->surgical_history) }}</x-wire-textarea>
+        <x-wire-textarea label="Antecedentes familiares" name="family_history" rows="3">{{ old('family_history', $patient->family_history) }}</x-wire-textarea>
+        <x-wire-textarea label="Medicamentos actuales" name="current_medications" rows="3">{{ old('current_medications', $patient->current_medications) }}</x-wire-textarea>
+        <x-wire-textarea label="Hábitos (tabaquismo, alcohol, alimentación, etc)" name="habits" rows="3">{{ old('habits', $patient->habits) }}</x-wire-textarea>
+    </div>
+
+    {{-- GRID DE MINIATURAS (archivos existentes) --}}
+        <div id="existing-files" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6 mt-4">
+            @if ($patient->images && $patient->images->count() > 0)
+                @foreach ($patient->images as $image)
+                    @php
+                        $url = Storage::url($image->path);
+                        $ext = strtolower(pathinfo($image->path, PATHINFO_EXTENSION));
+                        $isPdf = $ext === 'pdf';
+                    @endphp
+                    <a href="{{ $url }}" target="_blank" rel="noopener noreferrer" class="block">
+                        @if ($isPdf)
+                            <div class="w-full h-24 flex items-center justify-center border rounded-lg bg-white shadow-sm p-2 cursor-pointer hover:shadow-md transition-shadow duration-200">
+                                <div class="text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-8 w-8 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0119 10.5c0 3.866-3.582 7-8 7s-8-3.134-8-7c0-.52.038-1.032.11-1.53L12 14z" />
+                                    </svg>
+                                    <p class="text-xs font-medium truncate w-28">{{ \Illuminate\Support\Str::limit(basename($image->path), 22) }}</p>
+                                    <p class="text-xs text-gray-500">PDF</p>
+                                </div>
+                            </div>
+                        @else
+                            <div class="w-full h-24 flex items-center justify-center border rounded-lg bg-white shadow cursor-pointer hover:shadow-md transition-transform transform hover:scale-105 overflow-hidden">
+                                <img src="{{ $url }}" alt="Archivo médico" class="max-h-full max-w-full object-contain">
+                            </div>
+                        @endif
+                    </a>
+                @endforeach
+            @else
+                <p class="text-gray-500 mb-6 text-sm italic">No hay archivos subidos aún.</p>
+            @endif
+        </div>
+
+</x-tab-content>
 
                 {{-- TAB 3: Información General --}}
                 <x-tab-content tab="informacion-general">
@@ -132,7 +166,7 @@
                             @endforeach
                         </x-wire-native-select>
 
-                        <x-wire-textarea label="Observaciones" name="observations" rows="3">
+                        <x-wire-textarea label="Observaciones" name="observations" rows="1">
                             {{ old('observations', $patient->observations) }}
                         </x-wire-textarea>
                     </div>
@@ -175,35 +209,45 @@
     </form>
 
     @push('js')
-        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Mover visualmente el Dropzone al tab correspondiente
-                const dz = document.getElementById('my-awesome-dropzone');
-                const container = document.getElementById('dropzone-container');
-                container.appendChild(dz);
-                dz.classList.remove('hidden');
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dzForm = document.getElementById('my-awesome-dropzone');
+    const container = document.getElementById('dropzone-container');
 
-                Dropzone.options.myAwesomeDropzone = {
-                    // init: function(){
-                    //     let myDropzone = this;
-                    //     let images= @json($patient->images);
-                        
-                    //     images.forEach(function(image){
-                    //         let mockFile = { 
-                    //             id:image.id,
-                    //             name: image.path.split('/').pop(),
-                    //             size: image.size
-                    //         };
-                    //         myDropzone.existingFiles(mockFile, `{{ Storage::url('${image.path}') }}`);
-                    //     });
-                    // }
-                    paramName: "file",
-                    maxFilesize: 10, // MB
-                    acceptedFiles: ".jpg,.jpeg,.png,.pdf",
-                    dictDefaultMessage: "Arrastra archivos o haz clic aquí para subir antecedentes médicos",
+    // Mover el formulario Dropzone al contenedor
+    container.appendChild(dzForm);
+    dzForm.classList.remove('hidden');
+
+    // Inicializar Dropzone manualmente
+    const myDropzone = new Dropzone(dzForm, {
+        paramName: "file",
+        maxFilesize: 10, // MB
+        acceptedFiles: ".jpg,.jpeg,.png,.pdf",
+        dictDefaultMessage: "Arrastra archivos o haz clic aquí para subir antecedentes médicos",
+
+        init: function() {
+            let images = @json($patient->images);
+
+            images.forEach(image => {
+                let mockFile = {
+                    id: image.id,
+                    name: image.path.split('/').pop(),
+                    size: image.size
                 };
+
+                this.emit("addedfile", mockFile);
+
+                const ext = image.path.split('.').pop().toLowerCase();
+                if(ext !== 'pdf') {
+                    this.emit("thumbnail", mockFile, `{{ Storage::url('${image.path}') }}`);
+                }
+
+                this.emit("complete", mockFile);
             });
-        </script>
-    @endpush
+        }
+    });
+});
+</script>
+@endpush
 </x-admin-layout>
