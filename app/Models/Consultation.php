@@ -23,4 +23,10 @@ class Consultation extends Model
     {
        return $this->belongsTo(Appointment::class);
     }
+
+    // Relación polimórfica (1 paciente puede tener muchas imágenes)
+    public function images()
+    {
+        return $this->morphMany(Image2::class, 'imageable');
+    }
 }

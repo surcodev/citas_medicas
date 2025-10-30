@@ -17,7 +17,7 @@ class PatientTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
-        $this->setSearchPlaceholder('Buscar por Nombre');
+        $this->setSearchPlaceholder('Buscar paciente por nombre');
     }
 
     public function columns(): array
@@ -28,7 +28,7 @@ class PatientTable extends DataTableComponent
             Column::make('Email', 'user.email')->sortable(),
             Column::make('DNI', 'user.dni')->sortable(),
             Column::make('Teléfono', 'user.phone')->sortable(),
-            Column::make("Acciones")
+            Column::make("Editar")
                 ->label(function($row){
                     return view('admin.patients.actions', ['patient' => $row]);
                 }

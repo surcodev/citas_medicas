@@ -20,6 +20,7 @@ class AppointmentTable extends DataTableComponent
     {
         $this->setPrimaryKey('id');
         $this->setSearchPlaceholder('Buscar por Nombre');
+        $this->setDefaultSort('date', 'desc');
     }
 
     public function columns(): array

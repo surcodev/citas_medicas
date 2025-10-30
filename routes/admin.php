@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ConsultationController;
 
 Route::get('/', [DashboardController::class,'index'])->name('dashboard'); 
 
@@ -31,3 +32,6 @@ Route::post('patients/{patient}/dropzone', [PatientController::class, 'dropzone'
     ->name('patients.dropzone');
 Route::post('appointment/{appointment}/dropzone', [AppointmentController::class, 'dropzone'])
     ->name('appointments.dropzone');
+
+Route::post('consultations/{consultation}/dropzone', [ConsultationController::class, 'dropzone'])
+    ->name('consultation.dropzone');

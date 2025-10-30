@@ -32,7 +32,6 @@
                         name="email"
                         label="Correo electrónico"
                         type="email"
-                        required
                         :value="old('email')"
                         placeholder="Ingrese el correo electrónico del paciente"
                     />

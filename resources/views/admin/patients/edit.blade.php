@@ -83,13 +83,6 @@
 
                 {{-- TAB 2: Antecedentes --}}
                 <x-tab-content tab="antecedentes">
-                    <label class="block text-sm font-semibold text-gray-500 mb-2">
-                        Pruebas médicas
-                    </label>
-
-                    {{-- Contenedor visual para Dropzone --}}
-                    <div id="dropzone-container" class="mb-6"></div>
-
                     {{-- Textareas --}}
                     <div class="grid lg:grid-cols-2 gap-4">
                         <x-wire-textarea label="Alergias conocidas" name="allergies" rows="3">{{ old('allergies', $patient->allergies) }}</x-wire-textarea>
@@ -99,6 +92,13 @@
                         <x-wire-textarea label="Medicamentos actuales" name="current_medications" rows="3">{{ old('current_medications', $patient->current_medications) }}</x-wire-textarea>
                         <x-wire-textarea label="Hábitos (tabaquismo, alcohol, alimentación, etc)" name="habits" rows="3">{{ old('habits', $patient->habits) }}</x-wire-textarea>
                     </div>
+
+                    <label class="block text-sm font-semibold text-gray-500 mb-2 mt-4">
+                        Pruebas médicas (Adjuntar imágenes o documentos PNG,JPEG,PDF)
+                    </label>
+
+                    {{-- Contenedor visual para Dropzone --}}
+                    <div id="dropzone-container" class="mb-6"></div>
 
                     {{-- GRID DE MINIATURAS (archivos existentes) --}}
                         <div id="existing-files" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-6 mt-4">

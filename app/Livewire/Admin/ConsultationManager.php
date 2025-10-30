@@ -67,13 +67,13 @@ class ConsultationManager extends Component
     public function save()
     {
         $this->validate([
-            'form.diagnosis' => 'required|string|max:255',
-            'form.treatment' => 'required|string|max:255',
+            'form.diagnosis' => 'string|max:255',
+            'form.treatment' => 'string|max:255',
             'form.notes' => 'nullable|string|max:255',
-            'form.prescriptions' => 'required|array|min:1',
-            'form.prescriptions.*.medicine' => 'required|string|max:255',
-            'form.prescriptions.*.dosage' => 'required|string|max:255',
-            'form.prescriptions.*.frequency' => 'required|string|max:255',
+            'form.prescriptions' => 'array|min:1',
+            'form.prescriptions.*.medicine' => 'string|max:255',
+            'form.prescriptions.*.dosage' => 'string|max:255',
+            'form.prescriptions.*.frequency' => 'string|max:255',
         ]);
 
         // Si no existe consulta, la creamos
