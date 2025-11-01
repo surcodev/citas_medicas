@@ -4,7 +4,7 @@
 
 <div>
 
-<div>
+<div class="">
     <div class="md:flex md:justify-between items-center mb-4">
         <div>
             <p class="text-2xl font-bold text-gray-900 mb-1">
@@ -13,9 +13,12 @@
             <p class="text-sm font-semibold text-gray">
                 DNI: {{ $appointment->patient->user->dni ?? 'N/A' }}
             </p>
+            <p class="text-sm font-semibold text-gray">
+                Motivo dela cita: {{ $appointment->reason ?? 'N/A' }}
+            </p>
         </div>
 
-        <div class="flex space-x-8">
+        <div class="flex space-x-8 ">
             <x-wire-button outline gray x-on:click="$openModal('historyModal')">
                 <i class="fa-solid fa-notes-medical md"></i>
                 Ver historia

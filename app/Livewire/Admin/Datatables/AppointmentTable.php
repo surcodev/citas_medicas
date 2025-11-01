@@ -67,7 +67,7 @@ class AppointmentTable extends DataTableComponent
         HTML;
     })
     ->html(),
-            Column::make("Acciones")
+            Column::make("Mod. fecha | Consulta")
                 ->label(function($row){
                     return view('admin.appointments.actions', ['appointment' => $row]);
                 }

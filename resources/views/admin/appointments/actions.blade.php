@@ -1,4 +1,4 @@
-<div class="d-flex items-center space-x-2">
+<div class="d-flex items-center space-x-16">
     <x-wire-button href="{{ route('admin.appointments.edit', $appointment) }}" xs>
         <i class="fa-solid fa-pen-to-square"></i>
     </x-wire-button>

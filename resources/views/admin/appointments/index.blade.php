@@ -6,7 +6,7 @@
         'href' => route('admin.dashboard'),
     ],
     [
-        'name' => 'Citas',
+        'name' => 'Listado de Citas',
     ]
     ]"
     >
