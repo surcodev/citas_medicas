@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\BloodType;
 use App\Models\Patient;
+use App\Models\Consultation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +28,16 @@ class PatientController extends Controller
     {
         Gate::authorize('update_patient');
         $bloodTypes = BloodType::all();
-        return view('admin.patients.edit', compact('patient', 'bloodTypes'));
+
+        // ✅ Consultas que pertenecen solo a este paciente
+        $previousConsultations = Consultation::whereHas('appointment', function ($query) use ($patient) {
+            $query->where('patient_id', $patient->id);
+        })
+        ->with(['appointment.doctor.user', 'images'])
+        ->orderByDesc('created_at')
+        ->get();
+
+        return view('admin.patients.edit', compact('patient', 'bloodTypes', 'previousConsultations'));
     }
 
     /**

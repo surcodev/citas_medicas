@@ -67,9 +67,9 @@ class ConsultationManager extends Component
     public function save()
     {
         $this->validate([
-            'form.diagnosis' => 'string|max:255',
-            'form.treatment' => 'string|max:255',
-            'form.notes' => 'nullable|string|max:255',
+            'form.diagnosis' => 'string|max:500',
+            'form.treatment' => 'string|max:500',
+            'form.notes' => 'nullable|string|max:500',
             'form.prescriptions' => 'array|min:1',
             'form.prescriptions.*.medicine' => 'string|max:255',
             'form.prescriptions.*.dosage' => 'string|max:255',

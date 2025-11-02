@@ -12,7 +12,7 @@
     @endpush
 
     {{-- FORMULARIO PRINCIPAL --}}
-    <form action="{{ route('admin.patients.update', $patient) }}" method="POST">
+    <form action="{{ route('admin.patients.update', $patient) }}" method="POST" style="max-width: 90%; margin: auto;">
         @csrf
         @method('PUT')
 
@@ -79,6 +79,101 @@
                         <div><strong>Dirección:</strong> {{ $patient->user->address }}</div>
                         <div><strong>DNI:</strong> {{ $patient->user->dni }}</div>
                     </div>
+
+                    <hr style="border: none; height: 2px; background-color: #333; margin: 20px 0;">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 mt-6">HISTORIAL DE CONSULTAS</h3>
+
+                    <div>
+    @forelse ($previousConsultations as $i => $consultation)
+        <div x-data="{ open: false }" class="mb-3 border rounded-lg">
+            <button type="button" x-on:click="open = !open"
+                class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg">
+                <div>
+                    <p class="font-semibold text-gray-800 flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-days text-gray-500"></i>
+                        {{ $consultation->appointment->date->format('d/M/Y') }}
+                        ({{ $consultation->appointment->start_time->format('H:i') }} -
+                        {{ $consultation->appointment->end_time->format('H:i') }})
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Atendido por: Dra. {{ $consultation->appointment->doctor->user->name }}
+                        el {{ $consultation->appointment->date->format('d/m/Y') }}
+                        a las {{ $consultation->created_at->format('H:i') }}
+                    </p>
+                </div>
+                <i class="fa-solid" :class="open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </button>
+
+            <div x-show="open" x-collapse class="p-5 space-y-3 text-sm text-gray-700">
+                <p><strong>Diagnóstico:</strong> {{ $consultation->diagnosis ?? '-' }}</p>
+                <p><strong>Tratamiento:</strong> {{ $consultation->treatment ?? '-' }}</p>
+                <p><strong>Notas:</strong> {{ $consultation->notes ?? '-' }}</p>
+
+                {{-- Archivos adjuntos --}}
+                @if($consultation->images && $consultation->images->count())
+                    <div class="mt-3">
+                        <p class="font-semibold mb-2 text-gray-800">Archivos adjuntos:</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                            @foreach($consultation->images as $image)
+                                @php
+                                    $url = Storage::url($image->path);
+                                    $ext = strtolower(pathinfo($image->path, PATHINFO_EXTENSION));
+                                    $isPdf = $ext === 'pdf';
+                                @endphp
+
+                                <a href="{{ $url }}" target="_blank" class="block">
+                                    @if($isPdf)
+                                        <div class="w-full h-24 flex flex-col items-center justify-center border rounded-lg bg-white shadow-sm p-2 hover:shadow-md transition">
+                                            <i class="fa-regular fa-file-pdf text-3xl mb-1 text-red-600"></i>
+                                            <p class="text-xs text-gray-600 truncate w-28">{{ basename($image->path) }}</p>
+                                        </div>
+                                    @else
+                                        <div class="w-full h-24 flex items-center justify-center border rounded-lg bg-white overflow-hidden hover:shadow-md transition">
+                                            <img src="{{ $url }}" class="max-h-full max-w-full object-contain" alt="Adjunto">
+                                        </div>
+                                    @endif
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Recetas --}}
+                @if($consultation->prescriptions && is_array($consultation->prescriptions))
+                    @if(!empty($consultation->prescriptions))
+                        <div>
+                            <p class="font-semibold mb-2 text-gray-800">Receta:</p>
+                            <table class="w-full text-sm border">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="px-3 py-2 border">Medicamento</th>
+                                        <th class="px-3 py-2 border">Dosis</th>
+                                        <th class="px-3 py-2 border">Frecuencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($consultation->prescriptions as $item)
+                                        <tr>
+                                            <td class="px-3 py-2 border">{{ $item['medicine'] ?? '-' }}</td>
+                                            <td class="px-3 py-2 border">{{ $item['dosage'] ?? '-' }}</td>
+                                            <td class="px-3 py-2 border">{{ $item['frequency'] ?? '-' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                @else
+                    <p><strong>Receta:</strong> —</p>
+                @endif
+            </div>
+        </div>
+    @empty
+        <p class="text-gray-500 italic">No hay consultas anteriores registradas para este paciente.</p>
+    @endforelse
+</div>
+
+
                 </x-tab-content>
 
                 {{-- TAB 2: Antecedentes --}}

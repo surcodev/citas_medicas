@@ -75,19 +75,19 @@
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
       <ul class="-ml-8 flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
         <li>
-          <a href="/admin/doctors/1/edit" class="block py-2 px-3 text-infigo-700 rounded-sm md:bg-transparent md:text-infigo-700 md:p-0" aria-current="page">Mi perfil</a>
+          <a href="/admin/doctors/1/edit" class="block py-2 px-3 text-infigo-700 rounded-sm md:bg-transparent md:text-infigo-700 md:p-0 hover:bg-gray-300 md:hover:text-infigo-100" aria-current="page">Mi perfil</a>
         </li>
         <li>
-          <a href="{{ route('admin.patients.index') }}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:text-infigo-700 md:p-0">Pacientes</a>
+          <a href="{{ route('admin.patients.index') }}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-300 md:hover:text-infigo-100 md:p-0">Pacientes</a>
         </li>
         <li>
-          <a href="{{ route('admin.appointments.index') }}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:text-infigo-700 md:p-0">Citas Médicas</a>
+          <a href="{{ route('admin.appointments.index') }}" class="block py-2 px-3 text-gray-900 rounded-sm md:hover:text-infigo-700 md:p-0 hover:bg-gray-300 md:hover:text-infigo-100">Citas Médicas</a>
         </li>
         <li>
-          <a href="{{ route('admin.calendar.index') }}" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:text-infigo-700 md:p-0">Calendario</a>
+          <a href="{{ route('admin.calendar.index') }}" class="block py-2 px-3 text-gray-900 rounded-sm md:hover:text-infigo-700 md:p-0 hover:bg-gray-300 md:hover:text-infigo-100">Calendario</a>
         </li>
         <li>
-          <a href="https://docs.google.com/spreadsheets/d/18Kx1Ag493T5e69ckHhNcsU-jeTAmY20so7cIfNF21rA/edit?usp=sharing" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:text-infigo-700 md:p-0" target="_blank" >Inventario</a>
+          <a href="https://docs.google.com/spreadsheets/d/18Kx1Ag493T5e69ckHhNcsU-jeTAmY20so7cIfNF21rA/edit?usp=sharing" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-300 md:hover:text-infigo-100 md:p-0" target="_blank" >Inventario</a>
         </li>
       </ul>
     </div>

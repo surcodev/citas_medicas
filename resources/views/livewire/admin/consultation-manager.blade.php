@@ -14,7 +14,7 @@
                 DNI: {{ $appointment->patient->user->dni ?? 'N/A' }}
             </p>
             <p class="text-sm font-semibold text-gray">
-                Motivo dela cita: {{ $appointment->reason ?? 'N/A' }}
+                MOTIVO DE LA CITA: {{ $appointment->reason ?? 'N/A' }}
             </p>
         </div>
 
